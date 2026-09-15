@@ -17,15 +17,15 @@ button,.game{border:0;border-radius:14px;padding:13px 18px;font-size:18px;cursor
 .prompt{font-size:31px;font-weight:750;margin:22px 0 15px}.feedback{min-height:46px;margin-top:12px;font-size:17px}
 .hidden{display:none}.badge{display:inline-block;background:#eee;padding:6px 11px;border-radius:999px}
 .matchgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.matchbtn{background:#eee;min-height:58px}
-.selected{outline:3px solid #222}.back{background:none;color:#666;padding:6px;margin-bottom:12px;font-size:15px}.small{font-size:13px;color:#888}
+.selected{outline:3px solid #222}.speak{background:#e9eefc;color:#111;margin:8px 0 2px;font-size:17px;padding:10px 16px}.back{background:none;color:#666;padding:6px;margin-bottom:12px;font-size:15px}.small{font-size:13px;color:#888}
 </style></head>
 <body><main class="card">
 <section id="home">
 <h1>Holmgrens Challenges 🎮</h1>
 <div class="sub">Välj en challenge. Träna, samla poäng och försök slå ditt eget resultat.</div>
 <button class="game" onclick="openMath()">✖️ Gångertabellen<span>Välj rätt • hitta talet • para ihop • boss-runda</span></button>
-<button class="game" onclick="openEnglish()">🇬🇧 English Challenge<span>Rödprickade glosor • välj rätt • para ihop • boss-runda</span></button>
-<button class="game" onclick="openFrench()">🇫🇷 French Challenge<span>Vecka 38: presentationer • välj rätt • para ihop • boss-runda</span></button>
+<button class="game" onclick="openEnglish()">🇬🇧 English Challenge<span>Rödprickade glosor • uttal • lyssna • para ihop • boss</span></button>
+<button class="game" onclick="openFrench()">🇫🇷 French Challenge<span>Uttal • lyssna • para ihop • boss-runda</span></button>
 <div class="small">Fler challenges kan läggas till senare 🌟</div>
 </section>
 
@@ -34,18 +34,18 @@ button,.game{border:0;border-radius:14px;padding:13px 18px;font-size:18px;cursor
 <section id="mathMatch" class="hidden"><div class="badge">Runda 3 – Hitta paret 🧩</div><h1>Para ihop!</h1><div class="sub">Tryck på ett tal och sedan på rätt svar.</div><div class="matchgrid" id="mGrid"></div><div class="feedback" id="mMatchFeedback"></div><div class="stats"><span id="mPairs"></span><span></span><span id="mMatchScore"></span></div></section>
 <section id="mathEnd" class="hidden"><h1>Challenge klar! 🏆</h1><div id="mResult" style="font-size:20px;line-height:1.6"></div><button class="primary" style="margin-top:18px" onclick="openMath()">Kör igen ↻</button><br><button class="back" onclick="home()">← Startsidan</button></section>
 
-<section id="engStart" class="hidden"><button class="back" onclick="home()">← Tillbaka</button><h1>English Challenge 🇬🇧</h1><div class="sub">Rödprickade glosor • tre spelrundor.<br>Ingen stavningspress – känn igen och förstå orden.</div><button class="primary" onclick="startEng()">START ▶</button></section>
+<section id="engStart" class="hidden"><button class="back" onclick="home()">← Tillbaka</button><h1>English Challenge 🇬🇧</h1><div class="sub">Rödprickade glosor • fyra spelrundor.<br>Ingen stavningspress – känn igen och förstå orden.</div><button class="primary" onclick="startEng()">START ▶</button></section>
 <section id="engQuiz" class="hidden"><div class="badge" id="eRound"></div><div class="prompt" id="ePrompt"></div><div id="eOptions"></div><div class="feedback" id="eFeedback"></div><div class="stats"><span id="eProgress"></span><span id="eStreak"></span><span id="eScore"></span></div></section>
-<section id="engMatch" class="hidden"><div class="badge">Runda 2 – Para ihop 🧩</div><h1>Hitta paren</h1><div class="sub">Engelska + rätt svensk betydelse.</div><div class="matchgrid" id="eGrid"></div><div class="feedback" id="eMatchFeedback"></div><div class="stats"><span id="ePairs"></span><span></span><span id="eMatchScore"></span></div></section>
+<section id="engMatch" class="hidden"><div class="badge">Runda 3 – Para ihop 🧩</div><h1>Hitta paren</h1><div class="sub">Engelska + rätt svensk betydelse.</div><div class="matchgrid" id="eGrid"></div><div class="feedback" id="eMatchFeedback"></div><div class="stats"><span id="ePairs"></span><span></span><span id="eMatchScore"></span></div></section>
 <section id="engEnd" class="hidden"><h1>Klart! 🌟</h1><div id="eResult" style="font-size:20px;line-height:1.6"></div><button class="primary" style="margin-top:18px" onclick="openEnglish()">Kör igen ↻</button><br><button class="back" onclick="home()">← Startsidan</button></section>
 
-<section id="frStart" class="hidden"><button class="back" onclick="home()">← Tillbaka</button><h1>French Challenge 🇫🇷</h1><div class="sub">Välj vilken läxa du vill träna.<br>Tre spelrundor – utan stavningspress.</div>
+<section id="frStart" class="hidden"><button class="back" onclick="home()">← Tillbaka</button><h1>French Challenge 🇫🇷</h1><div class="sub">Välj vilken läxa du vill träna.<br>Fyra spelrundor – utan stavningspress.</div>
 <button class="game" onclick="startFr('v38')">🗣️ V.38 – Presentationer<span>Jag heter • vad heter du? • hon/han heter • jag vet...</span></button>
 <button class="game" onclick="startFr('v36')">👋 V.36 – Hälsningsfraser<span>Bonjour • salut • au revoir • ça va? • merci...</span></button>
 <button class="game" onclick="startFr('mix')">🎲 Blanda båda<span>En större challenge med ord från både v.36 och v.38</span></button>
 </section>
 <section id="frQuiz" class="hidden"><div class="badge" id="fRound"></div><div class="prompt" id="fPrompt"></div><div id="fOptions"></div><div class="feedback" id="fFeedback"></div><div class="stats"><span id="fProgress"></span><span id="fStreak"></span><span id="fScore"></span></div></section>
-<section id="frMatch" class="hidden"><div class="badge">Runda 2 – Para ihop 🧩</div><h1>Hitta paren</h1><div class="sub">Franska + rätt svensk betydelse.</div><div class="matchgrid" id="fGrid"></div><div class="feedback" id="fMatchFeedback"></div><div class="stats"><span id="fPairs"></span><span></span><span id="fMatchScore"></span></div></section>
+<section id="frMatch" class="hidden"><div class="badge">Runda 3 – Para ihop 🧩</div><h1>Hitta paren</h1><div class="sub">Franska + rätt svensk betydelse.</div><div class="matchgrid" id="fGrid"></div><div class="feedback" id="fMatchFeedback"></div><div class="stats"><span id="fPairs"></span><span></span><span id="fMatchScore"></span></div></section>
 <section id="frEnd" class="hidden"><h1>Très bien! 🌟</h1><div id="fResult" style="font-size:20px;line-height:1.6"></div><button class="primary" style="margin-top:18px" onclick="openFrench()">Kör igen ↻</button><br><button class="back" onclick="home()">← Startsidan</button></section>
 
 </main>
@@ -74,110 +74,166 @@ let mboss=[],mbi=0;
 function mBossStart(){show("mathQuiz");let pool=[...mwrong,...mslow];mboss=sh(pool.length?pool:MQ).slice(0,5);mbi=0;mBoss()}
 function mBoss(){if(mbi>=mboss.length){let tr=[...new Set(mwrong.map(x=>`${x[0]}×${x[1]}`))];show("mathEnd");document.getElementById("mResult").innerHTML=`Fyra rundor avklarade! 🌟<br><strong>${ms} poäng</strong><br><br>${tr.length?`Träna lite extra på: <strong>${tr.join(", ")}</strong>`:"Alla frågor satt fint! 🎉"}`;return}let [a,b]=mboss[mbi],ans=a*b;document.getElementById("mRound").textContent="BOSS-RUNDA 👑";document.getElementById("mPrompt").textContent=`${a} × ${b} = ?`;document.getElementById("mFeedback").textContent="Bossfråga – extra poäng!";document.getElementById("mProgress").textContent=`Boss ${mbi+1} / ${mboss.length}`;mDraw(mChoices(ans),ans,ok=>{if(ok)ms+=10;mbi++;setTimeout(mBoss,650)})}
 
+// LANGUAGE AUDIO
+function speakWord(text,lang){
+  if(!("speechSynthesis" in window)){
+    alert("Den här webbläsaren verkar sakna talsyntes.");
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang;
+  u.rate=.88;
+  const voices=window.speechSynthesis.getVoices();
+  const base=lang.toLowerCase().slice(0,2);
+  const v=voices.find(x=>x.lang.toLowerCase().startsWith(base));
+  if(v)u.voice=v;
+  window.speechSynthesis.speak(u);
+}
+function addSpeakButton(promptId,text,lang,label="🔊 Lyssna"){
+  const host=document.getElementById(promptId);
+  const br=document.createElement("div");
+  const b=document.createElement("button");
+  b.className="speak"; b.textContent=label;
+  b.onclick=()=>speakWord(text,lang);
+  br.appendChild(b); host.appendChild(br);
+}
+
 // ENGLISH
 const EW=[["zebra crossing","övergångsställe"],["sign","skylt"],["be kept on a lead","hållas kopplad"],["waiter","kypare"],["collar","halsband (på hund)"],["attach to","sätta fast i"],["parachute","fallskärm"],["umbrella","paraply"],["tablet","surfplatta"],["stamp","frimärke"],["envelope","kuvert"]];
 let es=0,est=0,ewrong=[],ei=0,eqs=[];
 function eStats(){document.getElementById("eScore").textContent=es+" p";document.getElementById("eStreak").textContent="🔥 "+est}
 function startEng(){es=0;est=0;ewrong=[];eqs=sh(EW);ei=0;show("engQuiz");eNext()}
-function eNext(){if(ei>=eqs.length){eMatchStart();return}let [en,sv]=eqs[ei];document.getElementById("eRound").textContent="Runda 1 – Välj rätt 🎯";document.getElementById("ePrompt").innerHTML=`Vad betyder <em>${en}</em>?`;document.getElementById("eFeedback").textContent="";document.getElementById("eProgress").textContent=`${ei+1} / ${eqs.length}`;eStats();let opts=sh([sv,...sh(EW.filter(x=>x[0]!==en)).slice(0,3).map(x=>x[1])]);let box=document.getElementById("eOptions");box.innerHTML="";opts.forEach(o=>{let b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=()=>{[...box.children].forEach(x=>x.disabled=true);if(o===sv){b.classList.add("good");es+=10+Math.min(est,5);est++;document.getElementById("eFeedback").textContent="Rätt! ⭐"}else{b.classList.add("bad");est=0;ewrong.push([en,sv]);[...box.children].find(x=>x.textContent===sv)?.classList.add("good");document.getElementById("eFeedback").textContent=`${en} = ${sv}`}eStats();ei++;setTimeout(eNext,750)};box.appendChild(b)})}
+function eAnswerOptions(correct,word,onDone){
+  let opts=sh([correct,...sh(EW.filter(x=>x[0]!==word)).slice(0,3).map(x=>x[1])]);
+  let box=document.getElementById("eOptions");box.innerHTML="";
+  opts.forEach(o=>{let b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=()=>{
+    [...box.children].forEach(x=>x.disabled=true);
+    let ok=o===correct;
+    if(ok){b.classList.add("good");es+=10+Math.min(est,5);est++;document.getElementById("eFeedback").textContent="Rätt! ⭐"}
+    else{b.classList.add("bad");est=0;ewrong.push([word,correct]);[...box.children].find(x=>x.textContent===correct)?.classList.add("good");document.getElementById("eFeedback").textContent=`${word} = ${correct}`}
+    eStats();onDone()
+  };box.appendChild(b)})
+}
+function eNext(){
+  if(ei>=eqs.length){eListenStart();return}
+  let [en,sv]=eqs[ei];
+  document.getElementById("eRound").textContent="Runda 1 – Välj rätt 🎯";
+  document.getElementById("ePrompt").innerHTML=`Vad betyder <em>${en}</em>?`;
+  addSpeakButton("ePrompt",en,"en-GB");
+  document.getElementById("eFeedback").textContent="";
+  document.getElementById("eProgress").textContent=`${ei+1} / ${eqs.length}`;eStats();
+  eAnswerOptions(sv,en,()=>{ei++;setTimeout(eNext,700)})
+}
+let elisten=[],eli=0;
+function eListenStart(){elisten=sh(EW).slice(0,Math.min(8,EW.length));eli=0;eListen()}
+function eListen(){
+  if(eli>=elisten.length){eMatchStart();return}
+  let [en,sv]=elisten[eli];
+  document.getElementById("eRound").textContent="Runda 2 – Lyssna 🎧";
+  document.getElementById("ePrompt").innerHTML="Vilket ord eller uttryck hör du?";
+  addSpeakButton("ePrompt",en,"en-GB","🔊 Spela upp");
+  document.getElementById("eFeedback").textContent="Lyssna först – välj sedan rätt betydelse.";
+  document.getElementById("eProgress").textContent=`${eli+1} / ${elisten.length}`;eStats();
+  eAnswerOptions(sv,en,()=>{eli++;setTimeout(eListen,700)})
+}
 let epick=null,ematched=0,eset=[];
-function eMatchStart(){show("engMatch");ematched=0;epick=null;eset=sh(EW).slice(0,6);let items=sh(eset.flatMap((w,k)=>[{t:w[0],p:k,k:"en"},{t:w[1],p:k,k:"sv"}]));let g=document.getElementById("eGrid");g.innerHTML="";items.forEach(it=>{let b=document.createElement("button");b.className="matchbtn";b.textContent=it.t;b.dataset.p=it.p;b.dataset.k=it.k;b.onclick=()=>ePick(b);g.appendChild(b)});eMatchStats()}
+function eMatchStart(){
+  show("engMatch");ematched=0;epick=null;eset=sh(EW).slice(0,6);
+  let items=sh(eset.flatMap((w,k)=>[{t:w[0],p:k,k:"en"},{t:w[1],p:k,k:"sv"}]));
+  let g=document.getElementById("eGrid");g.innerHTML="";
+  items.forEach(it=>{let b=document.createElement("button");b.className="matchbtn";b.textContent=it.t;b.dataset.p=it.p;b.dataset.k=it.k;
+    if(it.k==="en") b.ondblclick=()=>speakWord(it.t,"en-GB");
+    b.onclick=()=>ePick(b);g.appendChild(b)});
+  eMatchStats()
+}
 function ePick(b){if(b.disabled)return;if(!epick){epick=b;b.classList.add("selected");return}if(epick===b){b.classList.remove("selected");epick=null;return}if(epick.dataset.k===b.dataset.k){epick.classList.remove("selected");epick=b;b.classList.add("selected");return}if(epick.dataset.p===b.dataset.p){epick.classList.remove("selected");epick.classList.add("good");b.classList.add("good");epick.disabled=b.disabled=true;epick=null;ematched++;es+=15;document.getElementById("eMatchFeedback").textContent="Par! ✨";eMatchStats();if(ematched===6)setTimeout(eBossStart,650)}else{let o=epick;o.classList.add("bad");b.classList.add("bad");epick=null;document.getElementById("eMatchFeedback").textContent="Inte riktigt – prova igen.";setTimeout(()=>{o.classList.remove("selected","bad");b.classList.remove("bad")},450)}}
 function eMatchStats(){document.getElementById("ePairs").textContent=`${ematched} / 6 par`;document.getElementById("eMatchScore").textContent=es+" p"}
 let eboss=[],ebi=0;
 function eBossStart(){show("engQuiz");eboss=sh(ewrong.length?ewrong:EW).slice(0,Math.min(5,ewrong.length?ewrong.length:5));ebi=0;eBoss()}
-function eBoss(){if(ebi>=eboss.length){show("engEnd");document.getElementById("eResult").innerHTML=`Tre rundor avklarade! 🌟<br><strong>${es} poäng</strong><br><br>${ewrong.length?`Träna lite extra på: <strong>${[...new Set(ewrong.map(x=>x[0]))].join(", ")}</strong>`:"Alla ord satt direkt! 🎉"}`;return}let [en,sv]=eboss[ebi];document.getElementById("eRound").textContent="BOSS-RUNDA 👑";document.getElementById("ePrompt").innerHTML=`Vilket engelskt ord betyder <strong>${sv}</strong>?`;document.getElementById("eProgress").textContent=`Boss ${ebi+1} / ${eboss.length}`;document.getElementById("eFeedback").textContent="";let opts=sh([en,...sh(EW.filter(x=>x[0]!==en)).slice(0,3).map(x=>x[0])]);let box=document.getElementById("eOptions");box.innerHTML="";opts.forEach(o=>{let b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=()=>{[...box.children].forEach(x=>x.disabled=true);if(o===en){b.classList.add("good");es+=20;document.getElementById("eFeedback").textContent="BOSS-POÄNG! 👑"}else{b.classList.add("bad");[...box.children].find(x=>x.textContent===en)?.classList.add("good");document.getElementById("eFeedback").textContent="Rätt svar: "+en}ebi++;setTimeout(eBoss,750)};box.appendChild(b)})}
+function eBoss(){
+  if(ebi>=eboss.length){show("engEnd");document.getElementById("eResult").innerHTML=`Fyra rundor avklarade! 🌟<br><strong>${es} poäng</strong><br><br>${ewrong.length?`Träna lite extra på: <strong>${[...new Set(ewrong.map(x=>x[0]))].join(", ")}</strong>`:"Alla ord satt direkt! 🎉"}`;return}
+  let [en,sv]=eboss[ebi];
+  document.getElementById("eRound").textContent="BOSS-RUNDA 👑";
+  document.getElementById("ePrompt").innerHTML=`Vilket engelskt ord betyder <strong>${sv}</strong>?`;
+  document.getElementById("eProgress").textContent=`Boss ${ebi+1} / ${eboss.length}`;
+  document.getElementById("eFeedback").textContent="";
+  let opts=sh([en,...sh(EW.filter(x=>x[0]!==en)).slice(0,3).map(x=>x[0])]);let box=document.getElementById("eOptions");box.innerHTML="";
+  opts.forEach(o=>{let b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=()=>{
+    [...box.children].forEach(x=>x.disabled=true);
+    if(o===en){b.classList.add("good");es+=20;document.getElementById("eFeedback").textContent="BOSS-POÄNG! 👑";speakWord(en,"en-GB")}
+    else{b.classList.add("bad");[...box.children].find(x=>x.textContent===en)?.classList.add("good");document.getElementById("eFeedback").textContent="Rätt svar: "+en;speakWord(en,"en-GB")}
+    ebi++;setTimeout(eBoss,1000)
+  };box.appendChild(b)})
+}
 
 // FRENCH
 const FW38=[
-["je m'appelle","jag heter"],
-["tu t'appelles comment ?","Vad heter du?"],
-["et toi ?","och du?"],
-["moi","jag"],
-["c'est qui ?","vem är det?"],
-["elle s'appelle","hon heter"],
-["il s'appelle","han heter"],
-["elle est dans ma classe","hon går i min klass"],
-["je sais","jag vet"],
-["je ne sais pas","jag vet inte"]
+["je m'appelle","jag heter"],["tu t'appelles comment ?","Vad heter du?"],["et toi ?","och du?"],["moi","jag"],["c'est qui ?","vem är det?"],["elle s'appelle","hon heter"],["il s'appelle","han heter"],["elle est dans ma classe","hon går i min klass"],["je sais","jag vet"],["je ne sais pas","jag vet inte"]
 ];
 const FW36=[
-["Bonjour","Goddag, hej"],
-["Salut","Hej"],
-["Au revoir","Hejdå, adjö"],
-["Ça va ?","Hur är det?"],
-["Ça va.","Det är bra."],
-["Merci","Tack"],
-["Bonne journée","Ha en bra dag!"],
-["À bientôt","Ses snart"]
+["Bonjour","Goddag, hej"],["Salut","Hej"],["Au revoir","Hejdå, adjö"],["Ça va ?","Hur är det?"],["Ça va.","Det är bra."],["Merci","Tack"],["Bonne journée","Ha en bra dag!"],["À bientôt","Ses snart"]
 ];
-let FW=FW38, fs=0,fst=0,fwrong=[],fi=0,fqs=[],frLesson="";
+let FW=FW38,fs=0,fst=0,fwrong=[],fi=0,fqs=[],frLesson="";
 function fStats(){document.getElementById("fScore").textContent=fs+" p";document.getElementById("fStreak").textContent="🔥 "+fst}
-function startFr(mode){
- frLesson=mode;
- FW = mode==="v36" ? FW36 : mode==="mix" ? [...FW36,...FW38] : FW38;
- fs=0;fst=0;fwrong=[];fqs=sh(FW);fi=0;show("frQuiz");fNext()
+function startFr(mode){frLesson=mode;FW=mode==="v36"?FW36:mode==="mix"?[...FW36,...FW38]:FW38;fs=0;fst=0;fwrong=[];fqs=sh(FW);fi=0;show("frQuiz");fNext()}
+function fAnswerOptions(correct,word,onDone){
+  let opts=sh([correct,...sh(FW.filter(x=>x[0]!==word)).slice(0,3).map(x=>x[1])]);let box=document.getElementById("fOptions");box.innerHTML="";
+  opts.forEach(o=>{let b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=()=>{
+    [...box.children].forEach(x=>x.disabled=true);let ok=o===correct;
+    if(ok){b.classList.add("good");fs+=10+Math.min(fst,5);fst++;document.getElementById("fFeedback").textContent="Rätt! ⭐ Très bien!"}
+    else{b.classList.add("bad");fst=0;fwrong.push([word,correct]);[...box.children].find(x=>x.textContent===correct)?.classList.add("good");document.getElementById("fFeedback").textContent=`${word} = ${correct}`}
+    fStats();onDone()
+  };box.appendChild(b)})
 }
 function fNext(){
- if(fi>=fqs.length){fMatchStart();return}
- let [fr,sv]=fqs[fi];
- document.getElementById("fRound").textContent="Runda 1 – Välj rätt 🎯";
- document.getElementById("fPrompt").innerHTML=`Vad betyder <em>${fr}</em>?`;
- document.getElementById("fFeedback").textContent="";
- document.getElementById("fProgress").textContent=`${fi+1} / ${fqs.length}`; fStats();
- let opts=sh([sv,...sh(FW.filter(x=>x[0]!==fr)).slice(0,3).map(x=>x[1])]);
- let box=document.getElementById("fOptions");box.innerHTML="";
- opts.forEach(o=>{let b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=()=>{
-   [...box.children].forEach(x=>x.disabled=true);
-   if(o===sv){b.classList.add("good");fs+=10+Math.min(fst,5);fst++;document.getElementById("fFeedback").textContent="Rätt! ⭐ Très bien!"}
-   else{b.classList.add("bad");fst=0;fwrong.push([fr,sv]);[...box.children].find(x=>x.textContent===sv)?.classList.add("good");document.getElementById("fFeedback").textContent=`${fr} = ${sv}`}
-   fStats();fi++;setTimeout(fNext,750)
- };box.appendChild(b)})
+  if(fi>=fqs.length){fListenStart();return}
+  let [fr,sv]=fqs[fi];
+  document.getElementById("fRound").textContent="Runda 1 – Välj rätt 🎯";
+  document.getElementById("fPrompt").innerHTML=`Vad betyder <em>${fr}</em>?`;
+  addSpeakButton("fPrompt",fr,"fr-FR");
+  document.getElementById("fFeedback").textContent="";
+  document.getElementById("fProgress").textContent=`${fi+1} / ${fqs.length}`;fStats();
+  fAnswerOptions(sv,fr,()=>{fi++;setTimeout(fNext,700)})
+}
+let flisten=[],fli=0;
+function fListenStart(){flisten=sh(FW).slice(0,Math.min(8,FW.length));fli=0;fListen()}
+function fListen(){
+  if(fli>=flisten.length){fMatchStart();return}
+  let [fr,sv]=flisten[fli];
+  document.getElementById("fRound").textContent="Runda 2 – Lyssna 🎧";
+  document.getElementById("fPrompt").innerHTML="Vad betyder det du hör?";
+  addSpeakButton("fPrompt",fr,"fr-FR","🔊 Spela upp");
+  document.getElementById("fFeedback").textContent="Lyssna först – välj sedan rätt betydelse.";
+  document.getElementById("fProgress").textContent=`${fli+1} / ${flisten.length}`;fStats();
+  fAnswerOptions(sv,fr,()=>{fli++;setTimeout(fListen,700)})
 }
 let fpick=null,fmatched=0,fset=[];
 function fMatchStart(){
- show("frMatch");fmatched=0;fpick=null;fset=sh(FW).slice(0,6);
- let items=sh(fset.flatMap((w,k)=>[{t:w[0],p:k,k:"fr"},{t:w[1],p:k,k:"sv"}]));
- let g=document.getElementById("fGrid");g.innerHTML="";
- items.forEach(it=>{let b=document.createElement("button");b.className="matchbtn";b.textContent=it.t;b.dataset.p=it.p;b.dataset.k=it.k;b.onclick=()=>fPick(b);g.appendChild(b)});
- fMatchStats()
+  show("frMatch");fmatched=0;fpick=null;fset=sh(FW).slice(0,6);
+  let items=sh(fset.flatMap((w,k)=>[{t:w[0],p:k,k:"fr"},{t:w[1],p:k,k:"sv"}]));let g=document.getElementById("fGrid");g.innerHTML="";
+  items.forEach(it=>{let b=document.createElement("button");b.className="matchbtn";b.textContent=it.t;b.dataset.p=it.p;b.dataset.k=it.k;b.onclick=()=>fPick(b);g.appendChild(b)});fMatchStats()
 }
-function fPick(b){
- if(b.disabled)return;
- if(!fpick){fpick=b;b.classList.add("selected");return}
- if(fpick===b){b.classList.remove("selected");fpick=null;return}
- if(fpick.dataset.k===b.dataset.k){fpick.classList.remove("selected");fpick=b;b.classList.add("selected");return}
- if(fpick.dataset.p===b.dataset.p){
-   fpick.classList.remove("selected");fpick.classList.add("good");b.classList.add("good");fpick.disabled=b.disabled=true;fpick=null;fmatched++;fs+=15;
-   document.getElementById("fMatchFeedback").textContent="Par! ✨";fMatchStats();if(fmatched===6)setTimeout(fBossStart,650)
- } else {
-   let o=fpick;o.classList.add("bad");b.classList.add("bad");fpick=null;document.getElementById("fMatchFeedback").textContent="Inte riktigt – prova igen.";
-   setTimeout(()=>{o.classList.remove("selected","bad");b.classList.remove("bad")},450)
- }
-}
+function fPick(b){if(b.disabled)return;if(!fpick){fpick=b;b.classList.add("selected");return}if(fpick===b){b.classList.remove("selected");fpick=null;return}if(fpick.dataset.k===b.dataset.k){fpick.classList.remove("selected");fpick=b;b.classList.add("selected");return}if(fpick.dataset.p===b.dataset.p){fpick.classList.remove("selected");fpick.classList.add("good");b.classList.add("good");fpick.disabled=b.disabled=true;fpick=null;fmatched++;fs+=15;document.getElementById("fMatchFeedback").textContent="Par! ✨";fMatchStats();if(fmatched===6)setTimeout(fBossStart,650)}else{let o=fpick;o.classList.add("bad");b.classList.add("bad");fpick=null;document.getElementById("fMatchFeedback").textContent="Inte riktigt – prova igen.";setTimeout(()=>{o.classList.remove("selected","bad");b.classList.remove("bad")},450)}}
 function fMatchStats(){document.getElementById("fPairs").textContent=`${fmatched} / 6 par`;document.getElementById("fMatchScore").textContent=fs+" p"}
 let fboss=[],fbi=0;
 function fBossStart(){show("frQuiz");fboss=sh(fwrong.length?fwrong:FW).slice(0,Math.min(5,fwrong.length?fwrong.length:5));fbi=0;fBoss()}
 function fBoss(){
- if(fbi>=fboss.length){
-   show("frEnd");
-   let lessonName=frLesson==="v36"?"V.36 – Hälsningsfraser":frLesson==="mix"?"Blandad franska":"V.38 – Presentationer";
-   document.getElementById("fResult").innerHTML=`${lessonName}<br>Tre rundor avklarade! 🇫🇷<br><strong>${fs} poäng</strong><br><br>${fwrong.length?`Träna lite extra på: <strong>${[...new Set(fwrong.map(x=>x[0]))].join(", ")}</strong>`:"Alla uttryck satt direkt! 🎉"}`;
-   return
- }
- let [fr,sv]=fboss[fbi];
- document.getElementById("fRound").textContent="BOSS-RUNDA 👑";
- document.getElementById("fPrompt").innerHTML=`Vilket franskt uttryck betyder <strong>${sv}</strong>?`;
- document.getElementById("fProgress").textContent=`Boss ${fbi+1} / ${fboss.length}`;
- document.getElementById("fFeedback").textContent="";
- let opts=sh([fr,...sh(FW.filter(x=>x[0]!==fr)).slice(0,3).map(x=>x[0])]);
- let box=document.getElementById("fOptions");box.innerHTML="";
- opts.forEach(o=>{let b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=()=>{
-   [...box.children].forEach(x=>x.disabled=true);
-   if(o===fr){b.classList.add("good");fs+=20;document.getElementById("fFeedback").textContent="BOSS-POÄNG! 👑 Très bien!"}
-   else{b.classList.add("bad");[...box.children].find(x=>x.textContent===fr)?.classList.add("good");document.getElementById("fFeedback").textContent="Rätt svar: "+fr}
-   fbi++;setTimeout(fBoss,750)
- };box.appendChild(b)})
+  if(fbi>=fboss.length){
+    show("frEnd");let lessonName=frLesson==="v36"?"V.36 – Hälsningsfraser":frLesson==="mix"?"Blandad franska":"V.38 – Presentationer";
+    document.getElementById("fResult").innerHTML=`${lessonName}<br>Fyra rundor avklarade! 🇫🇷<br><strong>${fs} poäng</strong><br><br>${fwrong.length?`Träna lite extra på: <strong>${[...new Set(fwrong.map(x=>x[0]))].join(", ")}</strong>`:"Alla uttryck satt direkt! 🎉"}`;return
+  }
+  let [fr,sv]=fboss[fbi];
+  document.getElementById("fRound").textContent="BOSS-RUNDA 👑";
+  document.getElementById("fPrompt").innerHTML=`Vilket franskt uttryck betyder <strong>${sv}</strong>?`;
+  document.getElementById("fProgress").textContent=`Boss ${fbi+1} / ${fboss.length}`;document.getElementById("fFeedback").textContent="";
+  let opts=sh([fr,...sh(FW.filter(x=>x[0]!==fr)).slice(0,3).map(x=>x[0])]);let box=document.getElementById("fOptions");box.innerHTML="";
+  opts.forEach(o=>{let b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=()=>{
+    [...box.children].forEach(x=>x.disabled=true);
+    if(o===fr){b.classList.add("good");fs+=20;document.getElementById("fFeedback").textContent="BOSS-POÄNG! 👑 Très bien!";speakWord(fr,"fr-FR")}
+    else{b.classList.add("bad");[...box.children].find(x=>x.textContent===fr)?.classList.add("good");document.getElementById("fFeedback").textContent="Rätt svar: "+fr;speakWord(fr,"fr-FR")}
+    fbi++;setTimeout(fBoss,1000)
+  };box.appendChild(b)})
 }
 
 </script></body></html>
