@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Holmgrens Challenges</title>
+<style>
+*{box-sizing:border-box} body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#f4f4f7;margin:0;min-height:100vh;display:grid;place-items:center}
+.card{background:#fff;width:min(92vw,590px);padding:26px;border-radius:22px;box-shadow:0 8px 30px #0002;text-align:center;margin:20px}
+h1{margin:0 0 8px;font-size:30px}.sub{color:#666;line-height:1.45;margin-bottom:20px}
+button,.game{border:0;border-radius:14px;padding:13px 18px;font-size:18px;cursor:pointer}
+.primary{background:#111;color:#fff;font-size:21px;padding:14px 28px}
+.game{display:block;width:100%;margin:12px 0;background:#eee;color:#111;text-align:left;font-weight:700}
+.game span{display:block;font-size:14px;font-weight:400;color:#666;margin-top:5px}
+.option{display:block;width:100%;margin:9px 0;background:#eee;text-align:center;font-size:21px}
+.good{background:#dff5e3!important}.bad{background:#f9dddd!important}
+.stats{display:flex;justify-content:space-between;color:#666;margin-top:18px;font-size:14px}
+.prompt{font-size:31px;font-weight:750;margin:22px 0 15px}.feedback{min-height:46px;margin-top:12px;font-size:17px}
+.hidden{display:none}.badge{display:inline-block;background:#eee;padding:6px 11px;border-radius:999px}
+.matchgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.matchbtn{background:#eee;min-height:58px}
+.selected{outline:3px solid #222}.back{background:none;color:#666;padding:6px;margin-bottom:12px;font-size:15px}.small{font-size:13px;color:#888}
+</style></head>
+<body><main class="card">
+<section id="home">
+<h1>Holmgrens Challenges 🎮</h1>
+<div class="sub">Välj en challenge. Träna, samla poäng och försök slå ditt eget resultat.</div>
+<button class="game" onclick="openMath()">✖️ Gångertabellen<span>Välj rätt • hitta talet • para ihop • boss-runda</span></button>
+<button class="game" onclick="openEnglish()">🇬🇧 English Challenge<span>Rödprickade glosor • välj rätt • para ihop • boss-runda</span></button>
+<div class="small">Fler challenges kan läggas till senare 🌟</div>
+</section>
+
+<section id="mathStart" class="hidden"><button class="back" onclick="home()">← Tillbaka</button><h1>Gångertabellen 🎮</h1><div class="sub">Fyra rundor • tabellerna 1–10.<br><strong>Du tävlar bara mot dig själv.</strong></div><button class="primary" onclick="startMath()">START ▶</button></section>
+<section id="mathQuiz" class="hidden"><div class="badge" id="mRound"></div><div class="prompt" id="mPrompt"></div><div id="mOptions"></div><div class="feedback" id="mFeedback"></div><div class="stats"><span id="mProgress"></span><span id="mStreak"></span><span id="mScore"></span></div></section>
+<section id="mathMatch" class="hidden"><div class="badge">Runda 3 – Hitta paret 🧩</div><h1>Para ihop!</h1><div class="sub">Tryck på ett tal och sedan på rätt svar.</div><div class="matchgrid" id="mGrid"></div><div class="feedback" id="mMatchFeedback"></div><div class="stats"><span id="mPairs"></span><span></span><span id="mMatchScore"></span></div></section>
+<section id="mathEnd" class="hidden"><h1>Challenge klar! 🏆</h1><div id="mResult" style="font-size:20px;line-height:1.6"></div><button class="primary" style="margin-top:18px" onclick="openMath()">Kör igen ↻</button><br><button class="back" onclick="home()">← Startsidan</button></section>
+
+<section id="engStart" class="hidden"><button class="back" onclick="home()">← Tillbaka</button><h1>English Challenge 🇬🇧</h1><div class="sub">Rödprickade glosor • tre spelrundor.<br>Ingen stavningspress – känn igen och förstå orden.</div><button class="primary" onclick="startEng()">START ▶</button></section>
+<section id="engQuiz" class="hidden"><div class="badge" id="eRound"></div><div class="prompt" id="ePrompt"></div><div id="eOptions"></div><div class="feedback" id="eFeedback"></div><div class="stats"><span id="eProgress"></span><span id="eStreak"></span><span id="eScore"></span></div></section>
+<section id="engMatch" class="hidden"><div class="badge">Runda 2 – Para ihop 🧩</div><h1>Hitta paren</h1><div class="sub">Engelska + rätt svensk betydelse.</div><div class="matchgrid" id="eGrid"></div><div class="feedback" id="eMatchFeedback"></div><div class="stats"><span id="ePairs"></span><span></span><span id="eMatchScore"></span></div></section>
+<section id="engEnd" class="hidden"><h1>Klart! 🌟</h1><div id="eResult" style="font-size:20px;line-height:1.6"></div><button class="primary" style="margin-top:18px" onclick="openEnglish()">Kör igen ↻</button><br><button class="back" onclick="home()">← Startsidan</button></section>
+</main>
+<script>
+const ids=["home","mathStart","mathQuiz","mathMatch","mathEnd","engStart","engQuiz","engMatch","engEnd"];
+function show(id){ids.forEach(x=>document.getElementById(x).classList.add("hidden"));document.getElementById(id).classList.remove("hidden")}
+function home(){show("home")} function openMath(){show("mathStart")} function openEnglish(){show("engStart")}
+const sh=a=>[...a].sort(()=>Math.random()-.5);
+
+// MATH
+const MQ=[[7,8],[6,7],[9,6],[8,4],[7,9],[6,8],[4,7],[8,8],[9,7],[6,6],[3,8],[7,7],[9,4],[8,6],[6,9],[4,8],[7,6],[9,8],[5,7],[8,7]];
+let ms=0,mst=0,mwrong=[],mslow=[],mi=0,mqs=[];
+function mChoices(c){let s=new Set([c]);while(s.size<4){let d=Math.floor(Math.random()*17)-8;if(!d)d=3;s.add(Math.max(1,c+d))}return sh([...s])}
+function mStats(){document.getElementById("mScore").textContent=ms+" p";document.getElementById("mStreak").textContent="🔥 "+mst}
+function mDraw(opts,correct,cb){let box=document.getElementById("mOptions");box.innerHTML="";opts.forEach(o=>{let b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=()=>{[...box.children].forEach(x=>x.disabled=true);let ok=o===correct;if(ok){b.classList.add("good");ms+=10+Math.min(mst,5);mst++;document.getElementById("mFeedback").textContent="Rätt! ⭐"}else{b.classList.add("bad");mst=0;[...box.children].find(x=>+x.textContent===correct)?.classList.add("good");document.getElementById("mFeedback").textContent="Rätt svar är "+correct+"."}mStats();cb(ok)};box.appendChild(b)})}
+function startMath(){ms=0;mst=0;mwrong=[];mslow=[];mqs=sh(MQ).slice(0,10);mi=0;show("mathQuiz");mNext()}
+function mNext(){if(mi>=mqs.length){mMissingStart();return}let [a,b]=mqs[mi],ans=a*b,t=Date.now();document.getElementById("mRound").textContent="Runda 1 – Välj rätt 🎯";document.getElementById("mPrompt").textContent=`${a} × ${b} = ?`;document.getElementById("mFeedback").textContent="";document.getElementById("mProgress").textContent=`${mi+1} / ${mqs.length}`;mStats();mDraw(mChoices(ans),ans,ok=>{let sec=(Date.now()-t)/1000;if(!ok)mwrong.push([a,b]);else if(sec>7)mslow.push([a,b]);mi++;setTimeout(mNext,650)})}
+let mmiss=[],mmi=0;
+function mMissingStart(){mmiss=sh(MQ).slice(0,8);mmi=0;mMissing()}
+function mMissing(){if(mmi>=mmiss.length){mMatchStart();return}let [a,b]=mmiss[mmi],left=Math.random()<.5,c=left?a:b;document.getElementById("mRound").textContent="Runda 2 – Vad saknas? 🔍";document.getElementById("mPrompt").textContent=left?`? × ${b} = ${a*b}`:`${a} × ? = ${a*b}`;document.getElementById("mFeedback").textContent="";document.getElementById("mProgress").textContent=`${mmi+1} / ${mmiss.length}`;let s=new Set([c]);while(s.size<4)s.add(Math.max(1,c+Math.floor(Math.random()*7)-3));mDraw(sh([...s]),c,ok=>{if(!ok)mwrong.push([a,b]);mmi++;setTimeout(mMissing,650)})}
+let mpick=null,mmatched=0,mset=[];
+function mMatchStart(){show("mathMatch");mmatched=0;mpick=null;mset=sh(MQ).slice(0,6);let items=sh(mset.flatMap((x,k)=>[{t:`${x[0]} × ${x[1]}`,p:k,k:"q"},{t:String(x[0]*x[1]),p:k,k:"a"}]));let g=document.getElementById("mGrid");g.innerHTML="";items.forEach(it=>{let b=document.createElement("button");b.className="matchbtn";b.textContent=it.t;b.dataset.p=it.p;b.dataset.k=it.k;b.onclick=()=>mPick(b);g.appendChild(b)});mMatchStats()}
+function mPick(b){if(b.disabled)return;if(!mpick){mpick=b;b.classList.add("selected");return}if(mpick===b){b.classList.remove("selected");mpick=null;return}if(mpick.dataset.k===b.dataset.k){mpick.classList.remove("selected");mpick=b;b.classList.add("selected");return}if(mpick.dataset.p===b.dataset.p){mpick.classList.remove("selected");mpick.classList.add("good");b.classList.add("good");mpick.disabled=b.disabled=true;mpick=null;mmatched++;ms+=15;document.getElementById("mMatchFeedback").textContent="Snyggt par! ✨";mMatchStats();if(mmatched===6)setTimeout(mBossStart,650)}else{let o=mpick;o.classList.add("bad");b.classList.add("bad");mpick=null;document.getElementById("mMatchFeedback").textContent="Inte riktigt – prova igen!";setTimeout(()=>{o.classList.remove("selected","bad");b.classList.remove("bad")},450)}}
+function mMatchStats(){document.getElementById("mPairs").textContent=`${mmatched} / 6 par`;document.getElementById("mMatchScore").textContent=ms+" p"}
+let mboss=[],mbi=0;
+function mBossStart(){show("mathQuiz");let pool=[...mwrong,...mslow];mboss=sh(pool.length?pool:MQ).slice(0,5);mbi=0;mBoss()}
+function mBoss(){if(mbi>=mboss.length){let tr=[...new Set(mwrong.map(x=>`${x[0]}×${x[1]}`))];show("mathEnd");document.getElementById("mResult").innerHTML=`Fyra rundor avklarade! 🌟<br><strong>${ms} poäng</strong><br><br>${tr.length?`Träna lite extra på: <strong>${tr.join(", ")}</strong>`:"Alla frågor satt fint! 🎉"}`;return}let [a,b]=mboss[mbi],ans=a*b;document.getElementById("mRound").textContent="BOSS-RUNDA 👑";document.getElementById("mPrompt").textContent=`${a} × ${b} = ?`;document.getElementById("mFeedback").textContent="Bossfråga – extra poäng!";document.getElementById("mProgress").textContent=`Boss ${mbi+1} / ${mboss.length}`;mDraw(mChoices(ans),ans,ok=>{if(ok)ms+=10;mbi++;setTimeout(mBoss,650)})}
+
+// ENGLISH
+const EW=[["zebra crossing","övergångsställe"],["sign","skylt"],["be kept on a lead","hållas kopplad"],["waiter","kypare"],["collar","halsband (på hund)"],["attach to","sätta fast i"],["parachute","fallskärm"],["umbrella","paraply"],["tablet","surfplatta"],["stamp","frimärke"],["envelope","kuvert"]];
+let es=0,est=0,ewrong=[],ei=0,eqs=[];
+function eStats(){document.getElementById("eScore").textContent=es+" p";document.getElementById("eStreak").textContent="🔥 "+est}
+function startEng(){es=0;est=0;ewrong=[];eqs=sh(EW);ei=0;show("engQuiz");eNext()}
+function eNext(){if(ei>=eqs.length){eMatchStart();return}let [en,sv]=eqs[ei];document.getElementById("eRound").textContent="Runda 1 – Välj rätt 🎯";document.getElementById("ePrompt").innerHTML=`Vad betyder <em>${en}</em>?`;document.getElementById("eFeedback").textContent="";document.getElementById("eProgress").textContent=`${ei+1} / ${eqs.length}`;eStats();let opts=sh([sv,...sh(EW.filter(x=>x[0]!==en)).slice(0,3).map(x=>x[1])]);let box=document.getElementById("eOptions");box.innerHTML="";opts.forEach(o=>{let b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=()=>{[...box.children].forEach(x=>x.disabled=true);if(o===sv){b.classList.add("good");es+=10+Math.min(est,5);est++;document.getElementById("eFeedback").textContent="Rätt! ⭐"}else{b.classList.add("bad");est=0;ewrong.push([en,sv]);[...box.children].find(x=>x.textContent===sv)?.classList.add("good");document.getElementById("eFeedback").textContent=`${en} = ${sv}`}eStats();ei++;setTimeout(eNext,750)};box.appendChild(b)})}
+let epick=null,ematched=0,eset=[];
+function eMatchStart(){show("engMatch");ematched=0;epick=null;eset=sh(EW).slice(0,6);let items=sh(eset.flatMap((w,k)=>[{t:w[0],p:k,k:"en"},{t:w[1],p:k,k:"sv"}]));let g=document.getElementById("eGrid");g.innerHTML="";items.forEach(it=>{let b=document.createElement("button");b.className="matchbtn";b.textContent=it.t;b.dataset.p=it.p;b.dataset.k=it.k;b.onclick=()=>ePick(b);g.appendChild(b)});eMatchStats()}
+function ePick(b){if(b.disabled)return;if(!epick){epick=b;b.classList.add("selected");return}if(epick===b){b.classList.remove("selected");epick=null;return}if(epick.dataset.k===b.dataset.k){epick.classList.remove("selected");epick=b;b.classList.add("selected");return}if(epick.dataset.p===b.dataset.p){epick.classList.remove("selected");epick.classList.add("good");b.classList.add("good");epick.disabled=b.disabled=true;epick=null;ematched++;es+=15;document.getElementById("eMatchFeedback").textContent="Par! ✨";eMatchStats();if(ematched===6)setTimeout(eBossStart,650)}else{let o=epick;o.classList.add("bad");b.classList.add("bad");epick=null;document.getElementById("eMatchFeedback").textContent="Inte riktigt – prova igen.";setTimeout(()=>{o.classList.remove("selected","bad");b.classList.remove("bad")},450)}}
+function eMatchStats(){document.getElementById("ePairs").textContent=`${ematched} / 6 par`;document.getElementById("eMatchScore").textContent=es+" p"}
+let eboss=[],ebi=0;
+function eBossStart(){show("engQuiz");eboss=sh(ewrong.length?ewrong:EW).slice(0,Math.min(5,ewrong.length?ewrong.length:5));ebi=0;eBoss()}
+function eBoss(){if(ebi>=eboss.length){show("engEnd");document.getElementById("eResult").innerHTML=`Tre rundor avklarade! 🌟<br><strong>${es} poäng</strong><br><br>${ewrong.length?`Träna lite extra på: <strong>${[...new Set(ewrong.map(x=>x[0]))].join(", ")}</strong>`:"Alla ord satt direkt! 🎉"}`;return}let [en,sv]=eboss[ebi];document.getElementById("eRound").textContent="BOSS-RUNDA 👑";document.getElementById("ePrompt").innerHTML=`Vilket engelskt ord betyder <strong>${sv}</strong>?`;document.getElementById("eProgress").textContent=`Boss ${ebi+1} / ${eboss.length}`;document.getElementById("eFeedback").textContent="";let opts=sh([en,...sh(EW.filter(x=>x[0]!==en)).slice(0,3).map(x=>x[0])]);let box=document.getElementById("eOptions");box.innerHTML="";opts.forEach(o=>{let b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=()=>{[...box.children].forEach(x=>x.disabled=true);if(o===en){b.classList.add("good");es+=20;document.getElementById("eFeedback").textContent="BOSS-POÄNG! 👑"}else{b.classList.add("bad");[...box.children].find(x=>x.textContent===en)?.classList.add("good");document.getElementById("eFeedback").textContent="Rätt svar: "+en}ebi++;setTimeout(eBoss,750)};box.appendChild(b)})}
+</script></body></html>
