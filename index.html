@@ -2,7 +2,7 @@
 <html lang="sv">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Holmgrens Läxhub 3.17</title>
+<title>Holmgrens Läxhub 3.19</title>
 <style>
 *{box-sizing:border-box} body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#f4f4f7;margin:0;min-height:100vh;display:grid;place-items:center}
 .card{background:#fff;width:min(92vw,590px);padding:26px;border-radius:22px;box-shadow:0 8px 30px #0002;text-align:center;margin:20px}
@@ -48,6 +48,8 @@ button,.game{border:0;border-radius:14px;padding:13px 18px;font-size:18px;cursor
 .key{background:#eee;min-height:56px;font-size:25px;font-weight:700;padding:8px}.key.action{font-size:20px}.key.submit{background:#111;color:#fff}.key:active{transform:scale(.97)}
 .version{margin-top:14px;font-size:11px;color:#aaa}.praiseBox{background:#f6f6f8;border-radius:14px;padding:12px;margin:12px 0;font-weight:800}.feelRow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}.feelBtn{background:#eee;font-size:15px;padding:9px 12px}.backupRow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}.backup{background:#eee;font-size:14px;padding:9px 12px}
 @media (max-height:720px){.card{padding:15px;margin:7px}.stressPrompt{font-size:32px;margin:8px 0 6px}.timerBar{height:12px}.answerDisplay{min-height:48px;font-size:27px;margin:6px 0 8px}.keypad{gap:6px}.key{min-height:46px;font-size:22px;padding:5px}.feedback{min-height:34px;margin-top:7px}}
+.movieCard{background:linear-gradient(180deg,#f4f8ff,#fff);border:2px solid #dfe8ff;border-radius:18px;padding:16px;margin:12px 0;text-align:left}.movieCard h2{margin:0 0 8px}.movieWords{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.movieWord{background:#f2f3f6;border-radius:12px;padding:9px 10px;font-size:14px}.movieWord strong{display:block;font-size:15px}.linkbtn{display:block;width:100%;border:0;border-radius:14px;padding:13px 18px;font-size:18px;background:#111;color:#fff;text-decoration:none;text-align:center;font-weight:750;margin:10px 0}.movieHint{background:#fff6dc;border-radius:12px;padding:10px 12px;margin:10px 0;font-size:14px;line-height:1.45}.movieMeta{font-size:14px;color:#666;line-height:1.5}.movieQ{font-size:26px;font-weight:800;margin:20px 0 12px}@media(max-width:450px){.movieWords{grid-template-columns:1fr}}
+
 
 .spellInput{width:100%;border:2px solid #bbb;border-radius:14px;padding:13px 15px;font-size:23px;text-align:center;margin:8px 0 10px;outline:none}.spellInput:focus{border-color:#222}.spellCheck{width:100%;margin:2px 0 8px}
 .speak{background:#e9eefc;color:#111;margin:8px 0 2px;font-size:17px;padding:10px 16px}.back{background:none;color:#666;padding:6px;margin-bottom:12px;font-size:15px}.small{font-size:13px;color:#888}
@@ -63,7 +65,7 @@ button,.game{border:0;border-radius:14px;padding:13px 18px;font-size:18px;cursor
 <button class="profileBtn" onclick="selectProfile('oliver')">🚀 Oliver<span>Mina läxor & challenges</span></button>
 <button class="profileBtn selma" onclick="selectProfile('selma')">🌈 Selma<span>Mina lekar & stjärnor</span></button>
 </div>
-<div class="small">Resultat och framsteg sparas bara på den här enheten.</div><div class="version">Holmgrens Challenges 3.17</div>
+<div class="small">Resultat och framsteg sparas bara på den här enheten.</div><div class="version">Holmgrens Challenges 3.19 • fysik + engelska v.41</div>
 </section>
 <section id="hub" class="hidden">
 <button class="back" onclick="switchProfile()">← Byt person</button><div class="profileTag" id="profileTag"></div>
@@ -83,6 +85,10 @@ button,.game{border:0;border-radius:14px;padding:13px 18px;font-size:18px;cursor
 <section id="engEnd" class="hidden"><h1>Klart! 🌟</h1><div id="eResult" style="font-size:20px;line-height:1.6"></div><button class="primary" style="margin-top:18px" onclick="openEnglish()">Kör igen ↻</button><br><button class="back" onclick="goHub()">← Mina challenges</button></section>
 <section id="hangGame" class="hidden"><button class="exitChallenge" onclick="exitChallenge()">← Avsluta challenge</button><div class="badge">☠️ Hänga gubbe – stavning</div><div class="hangWrap" id="hangWrap"><svg class="hangSvg" viewBox="0 0 300 260" role="img" aria-label="Hänga gubbe"><path class="hangStatic" d="M38 238 H260 M72 238 V28 H202 M72 62 L105 28 M202 28 V58"/><circle id="hangPart0" class="hangPart" cx="202" cy="82" r="24"/><path id="hangPart1" class="hangPart" d="M202 106 V166"/><path id="hangPart2" class="hangPart" d="M202 124 L166 146"/><path id="hangPart3" class="hangPart" d="M202 124 L238 146"/><path id="hangPart4" class="hangPart" d="M202 166 L172 210"/><path id="hangPart5" class="hangPart" d="M202 166 L232 210"/></svg><div class="hangLives" id="hangLives">6 fel kvar</div><div class="hangWordCount" id="hangWordCount"></div></div><div class="prompt" id="hangPrompt">Lyssna och stava ordet</div><div class="hangMask" id="hangMask"></div><div id="hangSpeak"></div><div class="context" id="hangHint"></div><input id="hangInput" class="hangInput" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Skriv ordet på engelska"><button class="primary spellCheck" id="hangCheck" onclick="checkHangman()">Kolla ✓</button><div class="feedback hangFeedbackHold" id="hangFeedback"></div><div class="stats"><span id="hangProgress"></span><span id="hangScore">0 p</span></div></section>
 <section id="hangEnd" class="hidden"><h1 id="hangEndTitle">Gubben klarade sig! 😎</h1><div id="hangResult" style="font-size:20px;line-height:1.6"></div><button class="primary" style="margin-top:18px" onclick="restartHangman()">Kör igen ↻</button><br><button class="back" onclick="openEnglish()">← Till engelskan</button></section>
+<section id="movieStart" class="hidden"><button class="back" onclick="openEnglish()">← Till engelskan</button><div class="badge">🎬 Filmuppdrag • V.41</div><h1>Secret explorers</h1><div class="movieCard"><h2>Dead man's dog</h2><div class="movieMeta">UR Play • avsnitt 1 • ca 15 min • engelskt tal • svenska/engelska undertexter</div><div class="movieHint"><strong>Uppdrag:</strong> Se avsnittet och försök fånga vilka som går in på det förbjudna området, varför de är där och vad som händer med hunden.</div><a class="linkbtn" href="https://urplay.se/program/243412-dead-mans-dog-secret-explorers" target="_blank" rel="noopener noreferrer">▶ Öppna filmen på UR Play</a><div class="small" style="margin-top:10px">När filmen är klar: kom tillbaka hit och kör filmquizet.</div></div><div class="movieCard"><strong>Bonusord från filmuppdraget</strong><div class="movieWords"><div class="movieWord"><strong>channel</strong>kanal</div><div class="movieWord"><strong>forbidden area</strong>förbjudet område</div><div class="movieWord"><strong>abandoned factory</strong>nedlagd fabrik</div><div class="movieWord"><strong>adventure</strong>äventyr</div><div class="movieWord"><strong>abandoned dog</strong>övergiven hund</div><div class="movieWord"><strong>to film</strong>att filma</div></div></div><button class="primary" onclick="startOliverMovieQuiz()">Jag har sett filmen – starta quiz 🎯</button></section>
+<section id="movieQuiz" class="hidden"><button class="exitChallenge" onclick="openOliverMovie()">← Till filmuppdraget</button><div class="badge">🎬 Secret explorers</div><div class="movieQ" id="moviePrompt"></div><div id="movieOptions"></div><div class="feedback" id="movieFeedback"></div><div class="stats"><span id="movieProgress"></span><span>Filmquiz</span><span id="movieScore"></span></div></section>
+<section id="movieEnd" class="hidden"><div class="readHero">🎬🐕</div><h1>Filmuppdrag klart!</h1><div id="movieResult" style="font-size:20px;line-height:1.6"></div><button class="primary" style="margin-top:18px" onclick="startOliverMovieQuiz()">Kör quizet igen ↻</button><br><button class="back" onclick="openEnglish()">← Till engelskan</button></section>
+
 
 <section id="frStart" class="hidden"><button class="back" onclick="goHub()">← Tillbaka</button><h1>French Challenge 🇫🇷</h1><div class="sub">Välj vilken läxa du vill träna.<br>Fyra spelrundor med uttal, lyssning och blandad repetition.</div>
 <button class="game" onclick="startFr('v41')">🆕 V.41 – Siffror 1–12<span>un • deux • trois • quatre • cinq • six • sept • huit • neuf • dix • onze • douze</span></button>
@@ -125,7 +131,7 @@ button,.game{border:0;border-radius:14px;padding:13px 18px;font-size:18px;cursor
 
 </main>
 <script>
-const ids=["home","hub","mathStart","mathQuiz","mathMatch","mathEnd","engStart","engRead","engReadEnd","engQuiz","engMatch","engEnd","hangGame","hangEnd","frStart","frQuiz","frMatch","frEnd","stressStart","stressGame","stressEnd","selmaIntro","selmaGame","selmaEnd","progressScreen"];
+const ids=["home","hub","mathStart","mathQuiz","mathMatch","mathEnd","engStart","engRead","engReadEnd","engQuiz","engMatch","engEnd","hangGame","hangEnd","movieStart","movieQuiz","movieEnd","frStart","frQuiz","frMatch","frEnd","stressStart","stressGame","stressEnd","selmaIntro","selmaGame","selmaEnd","progressScreen"];
 function show(id){ids.forEach(x=>document.getElementById(x).classList.add("hidden"));document.getElementById(id).classList.remove("hidden")}
 const PROFILES={amelia:{name:"Amelia",icon:"🌟"},oliver:{name:"Oliver",icon:"🚀"},selma:{name:"Selma",icon:"🌈"}};let currentProfile=null;
 function home(){currentProfile=null;show("home")} function switchProfile(){home()}
@@ -143,6 +149,7 @@ function renderHub(){
   games+=`<button class="game" onclick="openEnglish()">🇬🇧 English Challenge<span>Glosor • uttal • lyssna • para ihop • boss</span></button>`;
   if(currentProfile==="oliver")games+=`<button class="game" onclick="openLawRight()">⚖️ SO: Lag och rätt<span>Begrepp • vem gör vad • från brott till dom • slutboss</span></button>`;
   if(currentProfile==="amelia")games+=`<button class="game" onclick="openFrench()">🇫🇷 French Challenge<span>Uttal • lyssna • para ihop • boss-runda</span></button>`;
+  if(currentProfile==="amelia")games+=`<button class="game" onclick="openPhysics()">🔬 NO: Fysiklabbet<span>Fysik 1–4 • grundträning • 9 labbstationer • finalprov</span></button>`;
   if(currentProfile==="amelia")games+=`<button class="game" onclick="openSO()">📚 SH-prov Challenge<span>FN • rättigheter • diskriminering • nationella minoriteter • slutboss</span></button>`;
  }
  document.getElementById("hubGames").innerHTML=games;
@@ -186,13 +193,15 @@ function dayDone(k){const p=profileData(loadHC());return !!(p.days&&p.days[k]&&p
 function getStreak(){let cur=0,best=0,run=0;const p=profileData(loadHC()),days=p.days||{},keys=Object.keys(days).filter(k=>days[k].runs).sort();keys.forEach((k,i)=>{if(i===0)run=1;else{const a=new Date(keys[i-1]+"T12:00:00"),b=new Date(k+"T12:00:00");run=((b-a)/86400000===1)?run+1:1}best=Math.max(best,run)});let d=new Date();if(!dayDone(localDateKey(d)))d.setDate(d.getDate()-1);while(dayDone(localDateKey(d))){cur++;d.setDate(d.getDate()-1)}return{current:cur,best}}
 function weekHTML(){const names=["M","T","O","T","F","L","S"],now=new Date(),js=(now.getDay()+6)%7,monday=new Date(now);monday.setDate(now.getDate()-js);let out='<div class="progressCard"><div class="progressTop"><span>📅 Den här veckan</span><span class="record">🔥 '+getStreak().current+' dagar</span></div><div class="week">';for(let i=0;i<7;i++){const d=new Date(monday);d.setDate(monday.getDate()+i);const k=localDateKey(d),done=dayDone(k),today=k===localDateKey();out+=`<div class="day ${done?"done":""} ${today?"today":""}">${names[i]}<b>${done?"✓":"·"}</b></div>`}return out+'</div><div class="progressNote">Grön bock = minst en challenge genomförd den dagen. Bästa streak: <strong>'+getStreak().best+' dagar</strong>.</div></div>'}
 function challengeLabel(key){
- const labels={math:"✖️ Gångertabellen",math_stress:"⚡ Stress",english:"🇬🇧 Engelska",english_2026_09_16:"🇬🇧 Amelia • Engelska",english_2026_09_16_en2sv:"🇬🇧 Amelia • Eng→Sve",english_2026_09_16_sv2en:"🇬🇧 Amelia • Sve→Eng",english_2026_09_16_spell:"🎧 Amelia • Stava",english_2026_09_16_mix:"🎲 Amelia • Mixad",english_amelia_reading_hw2:"📖 Amelia • Good to know",english_oliver_v38:"🇬🇧 Oliver • Engelska v.38",english_oliver_v39:"🇬🇧 Oliver • Engelska v.39",english_oliver_v40:"🇬🇧 Oliver • Engelska v.40",english_oliver_mix:"🇬🇧 Oliver • Engelska v.38+39+40",french_v36:"🇫🇷 Franska v.36",french_v38:"🇫🇷 Franska v.38",french_v40:"🇫🇷 Franska v.40",french_v41:"🇫🇷 Franska v.41",french_mix:"🇫🇷 Franska mix",selma_letters:"🌈 Bokstavslandet",selma_words:"✏️ Ordverkstan",selma_math:"🔢 Sifferjakten",selma_english:"🇬🇧 English Fun",selma_challenge:"⭐ Selma Challenge"};
+ const labels={math:"✖️ Gångertabellen",math_stress:"⚡ Stress",english:"🇬🇧 Engelska",english_2026_09_16:"🇬🇧 Amelia • Engelska",english_2026_09_16_en2sv:"🇬🇧 Amelia • Eng→Sve",english_2026_09_16_sv2en:"🇬🇧 Amelia • Sve→Eng",english_2026_09_16_spell:"🎧 Amelia • Stava",english_2026_09_16_mix:"🎲 Amelia • Mixad",english_amelia_reading_hw2:"📖 Amelia • Good to know",english_oliver_v38:"🇬🇧 Oliver • Engelska v.38",english_oliver_v39:"🇬🇧 Oliver • Engelska v.39",english_oliver_v40:"🇬🇧 Oliver • Engelska v.40",english_oliver_v41:"🇬🇧 Oliver • Engelska v.41",english_oliver_mix:"🇬🇧 Oliver • Engelska v.38+39+40",english_oliver_mix_v41:"🇬🇧 Oliver • Engelska v.38+39+40+41",english_oliver_movie_secret_explorers:"🎬 Oliver • Secret explorers",french_v36:"🇫🇷 Franska v.36",french_v38:"🇫🇷 Franska v.38",french_v40:"🇫🇷 Franska v.40",french_v41:"🇫🇷 Franska v.41",french_mix:"🇫🇷 Franska mix",selma_letters:"🌈 Bokstavslandet",selma_words:"✏️ Ordverkstan",selma_math:"🔢 Sifferjakten",selma_english:"🇬🇧 English Fun",selma_challenge:"⭐ Selma Challenge"};
  if(labels[key])return labels[key];
  const mode=key.endsWith("_en2sv")?"Eng→Sve":key.endsWith("_sv2en")?"Sve→Eng":key.endsWith("_spell")?"Stava":key.endsWith("_hangman")?"Hänga gubbe":key.endsWith("_mix")?"Mixad":"";
  if(key===ENGLISH_SET_ID+"_hangman")return `☠️ Amelia • Hänga gubbe`;
  if(key.startsWith("english_oliver_v38_"))return `🇬🇧 Oliver • V.38 • ${mode}`;
  if(key.startsWith("english_oliver_v39_"))return `🇬🇧 Oliver • V.39 • ${mode}`;
  if(key.startsWith("english_oliver_v40_"))return `🇬🇧 Oliver • V.40 • ${mode}`;
+ if(key.startsWith("english_oliver_v41_"))return `🇬🇧 Oliver • V.41 • ${mode}`;
+ if(key.startsWith("english_oliver_mix_v41_"))return `🇬🇧 Oliver • V.38+39+40+41 • ${mode}`;
  if(key.startsWith("english_oliver_mix_"))return `🇬🇧 Oliver • V.38+39+40 • ${mode}`;
  return key;
 }
@@ -209,7 +218,7 @@ function historyHTML(){
  return `<div class="progressCard"><div class="progressTop"><span>🗓️ Dagliga highscore</span><span></span></div><div class="progressNote" style="margin-bottom:5px">Bästa resultatet per övning den dagen. Dagens total är summan av dagens bästa resultat.</div>${rows}</div>`;
 }
 function groupProgress(title,items,g,keyFn,recordKey){const levels=items.map(x=>mastery(g,keyFn(x))),mastered=levels.filter(x=>x.rank===3).length,underway=levels.filter(x=>x.rank===2).length,train=levels.filter(x=>x.rank===1).length,fresh=levels.filter(x=>x.rank===0).length,weak=adaptiveItems(items,g,keyFn).filter(x=>mastery(g,keyFn(x)).rank>0&&mastery(g,keyFn(x)).rank<3).slice(0,5).map(keyFn),p=profileData(loadHC()),best=p.records[recordKey]||0,pct=Math.round(mastered/items.length*100);return `<div class="progressCard"><div class="progressTop"><span>${title}</span><span class="record">${best?`🏆 ${best} p`:"Inget rekord än"}</span></div><div class="bar"><span style="width:${pct}%"></span></div><div class="progressNote"><strong>${mastered}/${items.length} sitter</strong> • ${underway} på väg • ${train} behöver mer träning • ${fresh} nya${weak.length?`<br>🎯 Fokus just nu: <strong>${weak.join(", ")}</strong>`:""}</div></div>`}
-function renderProgress(){const box=document.getElementById("progressCards");if(!box)return;document.getElementById("progressIntro").innerHTML=`<strong>${profileName()}</strong> • highscore, fokusområden och genomförda dagar sparas lokalt på den här enheten.`;document.getElementById("weekSummary").innerHTML=weekHTML();const pd=profileData(loadHC()),totalHighscore=Object.values(pd.records||{}).reduce((sum,v)=>sum+(Number(v)||0),0);document.getElementById("weekSummary").innerHTML+=`<div class="progressCard"><div class="progressTop"><span>🏆 Totalt highscore</span><span class="record">${totalHighscore} p</span></div><div class="progressNote">Summan av dina bästa resultat i de olika övningarna.</div></div>`;let cards="";if(currentProfile==="selma"){const selmaCards=[["🌈 Bokstavslandet","selma_letters","Bokstäver, första ljud och stora/små bokstäver."],["✏️ Ordverkstan","selma_words","Korta ord som Selma skriver själv."],["🔢 Sifferjakten","selma_math","Räkna, talföljd och enkel plus/minus."],["🇬🇧 English Fun","selma_english","Hälsningar, one–ten och enkla engelska ord."],["⭐ Selma Challenge","selma_challenge","10 blandade frågor utan tidspress."]];cards=selmaCards.map(([title,key,note])=>{const best=pd.records[key]||0;return `<div class="progressCard"><div class="progressTop"><span>${title}</span><span class="record">${best?`🏆 ${best} p`:"Inget rekord än"}</span></div><div class="progressNote">${note}</div></div>`}).join("")}else{cards=groupProgress("✖️ Gångertabellen",MQ,"math",x=>`${x[0]}×${x[1]}`,"math");const stressBest=pd.records["math_stress"]||0;cards+=`<div class="progressCard"><div class="progressTop"><span>⚡ Gångertabellen Stress</span><span class="record">${stressBest?`🏆 ${stressBest} p`:"Inget rekord än"}</span></div><div class="progressNote">Tio sekunder per fråga. Rätt svar ger grundpoäng och snabbhet ger bonus.</div></div>`;if(currentProfile==="amelia"){const readBest=pd.records["english_amelia_reading_hw2"]||0;cards+=`<div class="progressCard"><div class="progressTop"><span>📖 Good to know</span><span class="record">${readBest?`🏆 ${readBest} p`:"Inte klar ännu"}</span></div><div class="progressNote">Sex scener med uppläsning och läsförståelse från engelskaläxan.</div></div>`+groupProgress("🇬🇧 Engelska",AMELIA_EW,"en",x=>x[0],ENGLISH_SET_ID)+groupProgress("🇫🇷 Franska v.36",FW36,"fr",x=>x[0],"french_v36")+groupProgress("🇫🇷 Franska v.38",FW38,"fr",x=>x[0],"french_v38")+groupProgress("🇫🇷 Franska v.40",FW40,"fr",x=>x[0],"french_v40")+groupProgress("🇫🇷 Franska v.41",FW41,"fr",x=>x[0],"french_v41");}else cards+=groupProgress("🇬🇧 Engelska v.38",OLIVER_EW38,"en",x=>x[0],"english_oliver_v38")+groupProgress("🇬🇧 Engelska v.39",OLIVER_EW39,"en",x=>x[0],"english_oliver_v39")+groupProgress("🇬🇧 Engelska v.40",OLIVER_EW40,"en",x=>x[0],"english_oliver_v40")}box.innerHTML=cards;document.getElementById("historyCards").innerHTML=historyHTML()}
+function renderProgress(){const box=document.getElementById("progressCards");if(!box)return;document.getElementById("progressIntro").innerHTML=`<strong>${profileName()}</strong> • highscore, fokusområden och genomförda dagar sparas lokalt på den här enheten.`;document.getElementById("weekSummary").innerHTML=weekHTML();const pd=profileData(loadHC()),totalHighscore=Object.values(pd.records||{}).reduce((sum,v)=>sum+(Number(v)||0),0);document.getElementById("weekSummary").innerHTML+=`<div class="progressCard"><div class="progressTop"><span>🏆 Totalt highscore</span><span class="record">${totalHighscore} p</span></div><div class="progressNote">Summan av dina bästa resultat i de olika övningarna.</div></div>`;let cards="";if(currentProfile==="selma"){const selmaCards=[["🌈 Bokstavslandet","selma_letters","Bokstäver, första ljud och stora/små bokstäver."],["✏️ Ordverkstan","selma_words","Korta ord som Selma skriver själv."],["🔢 Sifferjakten","selma_math","Räkna, talföljd och enkel plus/minus."],["🇬🇧 English Fun","selma_english","Hälsningar, one–ten och enkla engelska ord."],["⭐ Selma Challenge","selma_challenge","10 blandade frågor utan tidspress."]];cards=selmaCards.map(([title,key,note])=>{const best=pd.records[key]||0;return `<div class="progressCard"><div class="progressTop"><span>${title}</span><span class="record">${best?`🏆 ${best} p`:"Inget rekord än"}</span></div><div class="progressNote">${note}</div></div>`}).join("")}else{cards=groupProgress("✖️ Gångertabellen",MQ,"math",x=>`${x[0]}×${x[1]}`,"math");const stressBest=pd.records["math_stress"]||0;cards+=`<div class="progressCard"><div class="progressTop"><span>⚡ Gångertabellen Stress</span><span class="record">${stressBest?`🏆 ${stressBest} p`:"Inget rekord än"}</span></div><div class="progressNote">Tio sekunder per fråga. Rätt svar ger grundpoäng och snabbhet ger bonus.</div></div>`;if(currentProfile==="amelia"){const readBest=pd.records["english_amelia_reading_hw2"]||0;cards+=`<div class="progressCard"><div class="progressTop"><span>📖 Good to know</span><span class="record">${readBest?`🏆 ${readBest} p`:"Inte klar ännu"}</span></div><div class="progressNote">Sex scener med uppläsning och läsförståelse från engelskaläxan.</div></div>`+groupProgress("🇬🇧 Engelska",AMELIA_EW,"en",x=>x[0],ENGLISH_SET_ID)+groupProgress("🇫🇷 Franska v.36",FW36,"fr",x=>x[0],"french_v36")+groupProgress("🇫🇷 Franska v.38",FW38,"fr",x=>x[0],"french_v38")+groupProgress("🇫🇷 Franska v.40",FW40,"fr",x=>x[0],"french_v40")+groupProgress("🇫🇷 Franska v.41",FW41,"fr",x=>x[0],"french_v41");}else{cards+=groupProgress("🇬🇧 Engelska v.41",OLIVER_EW41,"en",x=>x[0],"english_oliver_v41")+groupProgress("🇬🇧 Engelska v.40",OLIVER_EW40,"en",x=>x[0],"english_oliver_v40")+groupProgress("🇬🇧 Engelska v.39",OLIVER_EW39,"en",x=>x[0],"english_oliver_v39")+groupProgress("🇬🇧 Engelska v.38",OLIVER_EW38,"en",x=>x[0],"english_oliver_v38");const movieBest=pd.records["english_oliver_movie_secret_explorers"]||0;cards+=`<div class="progressCard"><div class="progressTop"><span>🎬 Secret explorers</span><span class="record">${movieBest?`🏆 ${movieBest} p`:"Inget quizresultat än"}</span></div><div class="progressNote">Filmuppdraget till engelska v.41.</div></div>`}}box.innerHTML=cards;document.getElementById("historyCards").innerHTML=historyHTML()}
 
 
 // MATH
@@ -430,21 +439,23 @@ function finishReading(){
 }
 
 
-// Oliver – glosor från läxinformationen för vecka 38, 39 och 40.
+// Oliver – glosor från läxinformationen för vecka 38, 39, 40 och 41.
 const OLIVER_EW38=[["locked up","inlåst"],["sad","ledsen"],["break the code","knäcka koden"],["the other painting","den andra tavlan"],["to be continued","fortsättning följer"],["hunter","jägare"],["corner","hörn"],["downstairs","nerför trappan"],["prison","fängelse"],["put it away","lägg undan den"]];
 const OLIVER_EW39=[["strange letter","konstig bokstav"],["move a lot","flytta ofta"],["clean the window","putsa fönstret"],["heavy","tung"],["suddenly","plötsligt"],["something","något"],["over and over again","om och om igen"],["finally","till slut"],["noise from upstairs","oljud från övervåningen"],["wonder","undra"],["search","söka igenom"]];
 const OLIVER_EW40=[["light","tända"],["candle","ljus"],["dusty","dammig"],["hear her own heartbeat","höra sitt eget hjärta slå"],["again and again","gång på gång"],["smooth","jämn/slät"],["terrible smell","hemsk lukt"],["feel sick","må illa"],["blow","blåsa"],["sky","himmel"]];
+const OLIVER_EW41=[["visit","besök"],["wheel","hjul"],["invention","uppfinning"],["interesting","intressant"],["pavement","trottoar"],["press the button","trycka på knappen"],["cinema","bio"],["on your left","på vänster sida"],["opposite","mitt emot"],["straight on","rakt fram"]];
 function getOliverVocabSet(mode){
- const chosen=["v38","v39","v40","mix"].includes(mode)?mode:"v40";
+ const chosen=["v38","v39","v40","v41","mix"].includes(mode)?mode:"v41";
  if(chosen==="v38")return{mode:chosen,words:OLIVER_EW38,key:"english_oliver_v38",name:"Oliver • V.38",title:"V.38"};
  if(chosen==="v39")return{mode:chosen,words:OLIVER_EW39,key:"english_oliver_v39",name:"Oliver • V.39",title:"V.39"};
- if(chosen==="mix")return{mode:chosen,words:[...OLIVER_EW38,...OLIVER_EW39,...OLIVER_EW40],key:"english_oliver_mix",name:"Oliver • V.38 + V.39 + V.40",title:"V.38 + V.39 + V.40"};
- return{mode:"v40",words:OLIVER_EW40,key:"english_oliver_v40",name:"Oliver • V.40",title:"V.40"};
+ if(chosen==="v40")return{mode:chosen,words:OLIVER_EW40,key:"english_oliver_v40",name:"Oliver • V.40",title:"V.40"};
+ if(chosen==="mix")return{mode:chosen,words:[...OLIVER_EW38,...OLIVER_EW39,...OLIVER_EW40,...OLIVER_EW41],key:"english_oliver_mix_v41",name:"Oliver • V.38 + V.39 + V.40 + V.41",title:"V.38 + V.39 + V.40 + V.41"};
+ return{mode:"v41",words:OLIVER_EW41,key:"english_oliver_v41",name:"Oliver • V.41",title:"V.41"};
 }
 
 let EW=AMELIA_EW,EC=AMELIA_EC,engLesson="amelia",engRecordKey=ENGLISH_SET_ID,engLessonName="Engelska";
 let es=0,est=0,ewrong=[],ei=0,eqs=[];
-let oliverVocabSet="v40";
+let oliverVocabSet="v41";
 function vocabModeButtons(setMode){
  return `<button class="game" onclick="startVocab('en2sv','${setMode}')">🇬🇧→🇸🇪 Engelska → svenska<span>Orden kommer i ny ordning och svaren blandas varje gång</span></button><button class="game" onclick="startVocab('sv2en','${setMode}')">🇸🇪→🇬🇧 Svenska → engelska<span>Vänd på glosorna och välj rätt engelska ord</span></button><button class="game" onclick="startVocab('spell','${setMode}')">🎧✍️ Lyssna → stava<span>Hör ordet utan att se det och skriv själv</span></button><button class="game" onclick="startHangman('${setMode}')">☠️ Hänga gubbe – stavning<span>Stava alla ord rätt innan streckgubben blir komplett • 6 fel</span></button><button class="game" onclick="startVocab('mix','${setMode}')">🎲 Mixad challenge<span>Alla tre frågetyper blandas • felrunda på det som missas</span></button>`;
 }
@@ -457,14 +468,45 @@ function renderEnglishStart(){
  title.textContent="English Challenge 🇬🇧";
  if(currentProfile==="oliver"){
   const set=getOliverVocabSet(oliverVocabSet);oliverVocabSet=set.mode;
-  const extraV40=set.mode==="v40"?"<br>📺 Till v.40: se också avsnitt 5, 6 och 7 av <strong>The Gun</strong>.":"";
-  sub.innerHTML=`Vald läxa: <strong>${set.title}</strong><br>Välj vecka först och sedan träningssätt.${extraV40}`;
-  box.innerHTML=`<div class="small" style="text-align:left;margin:2px 0 8px"><strong>Välj läxvecka</strong></div><button type="button" class="game" onclick="selectOliverVocabSet('v40')">${set.mode==="v40"?"✅ ":""}V.40 – aktuell läxa<span>light • candle • dusty • again and again • smooth...</span></button><button type="button" class="game" onclick="selectOliverVocabSet('v39')">${set.mode==="v39"?"✅ ":""}V.39 – tidigare läxa<span>strange letter • heavy • suddenly • finally...</span></button><button type="button" class="game" onclick="selectOliverVocabSet('v38')">${set.mode==="v38"?"✅ ":""}V.38 – tidigare läxa<span>locked up • sad • break the code • hunter...</span></button><button type="button" class="game" onclick="selectOliverVocabSet('mix')">${set.mode==="mix"?"✅ ":""}Blanda V.38 + V.39 + V.40<span>Träna alla tre läxornas ord i samma challenge</span></button><div id="oliverModes"><div class="small" style="text-align:left;margin:18px 0 8px"><strong>Träna ${set.title}</strong> • ${set.words.length} glosor</div>${vocabModeButtons(set.mode)}</div>`;
+  const movieBlock=set.mode==="v41"?`<button type="button" class="game" onclick="openOliverMovie()">🎬 Filmuppdrag – Secret explorers<span>Dead man's dog • UR Play • se filmen och kör ett kort förståelsequiz</span></button>`:"";
+  const extraV40=set.mode==="v40"?"<br>📺 V.40 hade även avsnitt 5, 6 och 7 av <strong>The Gun</strong>.":"";
+  sub.innerHTML=`Vald läxa: <strong>${set.title}</strong><br>Välj vecka först och sedan träningssätt.${set.mode==="v41"?"<br>🎬 Filmuppdraget ligger separat så skolans 10 glosor hålls rena.":extraV40}`;
+  box.innerHTML=`<div class="small" style="text-align:left;margin:2px 0 8px"><strong>Välj läxvecka</strong></div><button type="button" class="game" onclick="selectOliverVocabSet('v41')">${set.mode==="v41"?"✅ ":""}V.41 – aktuell läxa<span>visit • wheel • invention • pavement • straight on...</span></button><button type="button" class="game" onclick="selectOliverVocabSet('v40')">${set.mode==="v40"?"✅ ":""}V.40 – tidigare läxa<span>light • candle • dusty • again and again • smooth...</span></button><button type="button" class="game" onclick="selectOliverVocabSet('v39')">${set.mode==="v39"?"✅ ":""}V.39 – tidigare läxa<span>strange letter • heavy • suddenly • finally...</span></button><button type="button" class="game" onclick="selectOliverVocabSet('v38')">${set.mode==="v38"?"✅ ":""}V.38 – tidigare läxa<span>locked up • sad • break the code • hunter...</span></button><button type="button" class="game" onclick="selectOliverVocabSet('mix')">${set.mode==="mix"?"✅ ":""}Blanda V.38 + V.39 + V.40 + V.41<span>Träna alla fyra läxornas ord i samma challenge</span></button>${movieBlock}<div id="oliverModes"><div class="small" style="text-align:left;margin:18px 0 8px"><strong>Träna ${set.title}</strong> • ${set.words.length} glosor</div>${vocabModeButtons(set.mode)}</div>`;
  }else{
   sub.innerHTML="Läxa: <strong>Good to know</strong> • textförståelse + rödprickade glosor.<br>Samma träningsmodell som Oliver – välj hur du vill träna.";
   box.innerHTML=`<button class="game" onclick="startReading()">📖 Textuppdrag – Good to know<span>6 korta scener • lyssna • förstå • svara utan tidspress</span></button>${vocabModeButtons("amelia")}`;
  }
 }
+
+// OLIVER V.41 – filmuppdrag: Dead man's dog, avsnitt 1 "Secret explorers".
+const OLIVER_MOVIE_Q=[
+ {q:"Who start their own channel?",opts:["Adam and Nick","Adam and Josie","Nick and Josie","Josie and the dog"],a:"Adam and Nick",exp:"Adam and Nick start their own channel."},
+ {q:"Where do Adam and Nick go to film?",opts:["An abandoned factory","A cinema","A school","A football field"],a:"An abandoned factory",exp:"They enter a forbidden area at an abandoned factory."},
+ {q:"Are Adam and Nick allowed to be there?",opts:["No, it is a forbidden area","Yes, it is their home","Yes, they work there","No, because the cinema is closed"],a:"No, it is a forbidden area",exp:"The place is described as a forbidden area."},
+ {q:"Why do Adam and Nick go there?",opts:["To film their adventure","To buy a dog","To invent a wheel","To visit a cinema"],a:"To film their adventure",exp:"They want to film their adventure for their channel."},
+ {q:"Who meets an abandoned dog?",opts:["Josie","Adam","Nick","A teacher"],a:"Josie",exp:"Josie meets an abandoned dog."},
+ {q:"What does Josie start to dream about?",opts:["That the dog will become hers","That she will own the factory","That Adam will stop filming","That Nick will open a cinema"],a:"That the dog will become hers",exp:"Josie starts dreaming that the dog could be hers."}
+];
+let movieQs=[],movieI=0,movieScore=0,movieWrong=[];
+function openOliverMovie(){if(currentProfile!=="oliver")return;show("movieStart");window.scrollTo(0,0)}
+function startOliverMovieQuiz(){if(currentProfile!=="oliver")return;movieQs=sh([...OLIVER_MOVIE_Q]);movieI=0;movieScore=0;movieWrong=[];show("movieQuiz");drawOliverMovieQuiz()}
+function drawOliverMovieQuiz(){
+ if(movieI>=movieQs.length){finishOliverMovieQuiz();return}
+ const q=movieQs[movieI];document.getElementById("moviePrompt").textContent=q.q;document.getElementById("movieFeedback").textContent="";document.getElementById("movieProgress").textContent=`${movieI+1} / ${movieQs.length}`;document.getElementById("movieScore").textContent=`${movieScore} p`;
+ const box=document.getElementById("movieOptions");box.innerHTML="";sh([...q.opts]).forEach(o=>{const b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=()=>answerOliverMovie(b,o,q,box);box.appendChild(b)});
+}
+function answerOliverMovie(btn,value,q,box){
+ [...box.children].forEach(x=>x.disabled=true);const ok=value===q.a;recordSkill("en_movie","secret_explorers_"+movieI,ok);
+ if(ok){btn.classList.add("good");movieScore+=10;document.getElementById("movieFeedback").innerHTML=`✅ Right! <span class="context">${q.exp}</span>`}
+ else{btn.classList.add("bad");[...box.children].find(x=>x.textContent===q.a)?.classList.add("good");movieWrong.push(q);document.getElementById("movieFeedback").innerHTML=`🎯 Correct answer: <strong>${q.a}</strong><span class="context">${q.exp}</span>`}
+ document.getElementById("movieScore").textContent=`${movieScore} p`;setTimeout(()=>{movieI++;drawOliverMovieQuiz()},1000);
+}
+function finishOliverMovieQuiz(){
+ show("movieEnd");const rec=recordText("english_oliver_movie_secret_explorers",movieScore),right=OLIVER_MOVIE_Q.length-movieWrong.length;
+ const focus=movieWrong.length?`<div class="mistakeBox"><strong>🎯 Titta en extra gång på:</strong><div class="small" style="margin-top:6px">${movieWrong.map(q=>"• "+q.q).join("<br>")}</div></div>`:`<div class="mistakeBox"><strong>🌟 Full pott!</strong><div class="small" style="margin-top:6px">Du hade koll på hela filmuppdraget.</div></div>`;
+ document.getElementById("movieResult").innerHTML=`<strong>${right} av ${OLIVER_MOVIE_Q.length} rätt</strong><br><strong>${movieScore} poäng</strong>${rec}${focus}<br><span class="small">Filmquizet är bonus. Skolans ordinarie v.41-glosor tränas separat.</span>`;
+}
+
 function eStats(){document.getElementById("eScore").textContent=es+" p";document.getElementById("eStreak").textContent="🔥 "+est}
 let aMode="mix",aItems=[],aIndex=0,aMistakes=[],aStillWrong=[],aRetry=false;
 function startVocab(mode,setMode){
@@ -1295,6 +1337,216 @@ var oldRenderProgress=window.renderProgress;
 window.renderProgress=function(){oldRenderProgress();if(currentProfile!=="oliver")return;var box=document.getElementById("progressCards");if(!box)return;var p=profileData(loadHC());var trained=LR_QUESTIONS.filter(function(q){return mastery("law",q.key).rank>0}).length;var sitting=LR_QUESTIONS.filter(function(q){return mastery("law",q.key).rank===3}).length;var boss=Number(p.records["law_boss"])||0;var weak=adaptiveItems(LR_QUESTIONS,"law",function(x){return x.key}).filter(function(q){var m=mastery("law",q.key);return m.rank>0&&m.rank<3}).slice(0,4);box.insertAdjacentHTML("beforeend",'<div class="progressCard"><div class="progressTop"><span>⚖️ SO • Lag och rätt</span><span class="record">'+(boss?'🏆 '+boss+' p':'Inget bossrekord än')+'</span></div><div class="bar"><span style="width:'+Math.round(sitting/LR_QUESTIONS.length*100)+'%"></span></div><div class="progressNote"><strong>'+sitting+'/'+LR_QUESTIONS.length+' kärnfrågor sitter</strong> • '+trained+' har tränats.'+(weak.length?'<br>🎯 Fokus just nu: '+weak.map(function(q){return q.q.replace(/\?$/,"")}).join(' • ')+'.':'')+'</div></div>')};
 
 lrInject();
+})();
+</script>
+<script>
+// AMELIA NO/FYSIK 3.18 – Fysik 1–4, grundträning + Fysiklabbet + finalprov
+(function(){
+const PH_Q=[
+{k:"movement",topic:"Rörelse & fart",q:"Vad betyder rörelse?",o:["Att något rör sig på något sätt","Att något alltid går snabbt","Att något står helt stilla","Att något bara faller"],a:0,e:"Rörelse betyder att något rör sig på något sätt."},
+{k:"speed",topic:"Rörelse & fart",q:"Vad beskriver hastighet eller fart?",o:["Hur snabbt något rör sig","Hur tungt något är","Hur stor stödytan är","Hur mycket friktion det finns"],a:0,e:"Hastighet eller fart beskriver hur snabbt något rör sig."},
+{k:"avg",topic:"Rörelse & fart",q:"Hur räknar man ut medelhastighet?",o:["Sträcka ÷ tid","Tid ÷ sträcka","Sträcka × tid","Sträcka + tid"],a:0,e:"Medelhastighet = sträcka delat med tid, till exempel km/h eller m/s."},
+{k:"avgcalc",topic:"Rörelse & fart",q:"Du färdas 100 km på 2 timmar. Vilken är medelhastigheten?",o:["50 km/h","100 km/h","200 km/h","25 km/h"],a:0,e:"100 ÷ 2 = 50 km/h."},
+{k:"acc",topic:"Rörelse & fart",q:"Vad betyder accelerera?",o:["Att hastigheten ökar","Att hastigheten minskar","Att stå still","Att byta massa"],a:0,e:"Accelerera betyder att hastigheten ökar – det går snabbare och snabbare."},
+{k:"ret",topic:"Rörelse & fart",q:"Vad betyder retardera?",o:["Att hastigheten minskar","Att hastigheten ökar","Att falla fritt","Att friktionen försvinner"],a:0,e:"Retardera betyder att hastigheten minskar – att sakta ner."},
+{k:"force",topic:"Krafter",q:"Vad kan en kraft göra?",o:["Dra eller trycka och ändra rörelse","Bara göra saker tyngre","Bara få saker att falla","Bara ändra färg"],a:0,e:"En kraft kan dra eller trycka och få något att börja röra sig, stanna eller ändra riktning."},
+{k:"arrow",topic:"Krafter",q:"Vad visar en kraftpil?",o:["Längden visar styrkan och pilen visar riktningen","Längden visar tiden och pilen visar vikten","Bara vilken färg kraften har","Bara var föremålet står"],a:0,e:"Pilens längd visar hur stark kraften är och pilspetsen visar riktningen."},
+{k:"gravity",topic:"Krafter",q:"Vad gör tyngdkraften?",o:["Drar oss ner och in mot jorden","Trycker oss bort från jorden","Tar bort friktion","Gör stödytan större"],a:0,e:"Jordens gravitationskraft, tyngdkraften, drar föremål mot jordens centrum."},
+{k:"newton",topic:"Krafter",q:"I vilken enhet mäts kraft?",o:["Newton (N)","Kilometer (km)","Sekund (s)","Liter (l)"],a:0,e:"Kraft mäts i Newton, N."},
+{k:"48kg",topic:"Krafter",q:"En person väger 48 kg. Ungefär hur stor gravitationskraft drar personen mot jorden enligt läxbladet?",o:["480 N","48 N","4 800 N","96 N"],a:0,e:"I läxan används ungefär 10 N per kg: 48 kg ≈ 480 N."},
+{k:"normal",topic:"Krafter",q:"En boll ligger still på ett bord. Vilka två krafter balanserar varandra?",o:["Tyngdkraft nedåt och normalkraft uppåt","Friktion uppåt och fart nedåt","Dragkraft och tidvatten","Acceleration och retardation"],a:0,e:"Tyngdkraften drar nedåt och bordets normalkraft verkar uppåt. När de är lika ligger bollen still."},
+{k:"pullpush",topic:"Krafter",q:"Vilka två vanliga typer av kraft nämns i läxan?",o:["Dragkraft och tryckkraft","Värmekraft och kylkraft","Ljudkraft och ljuskraft","Fartkraft och tidskraft"],a:0,e:"Två krafter som läxbladet tar upp är dragkraft och tryckkraft."},
+{k:"balanceforce",topic:"Krafter",q:"Två motsatta krafter på ett föremål är lika stora. Vad händer?",o:["Krafterna är i balans","Föremålet måste accelerera","Tyngdkraften försvinner","Friktionen blir noll"],a:0,e:"Lika stora motriktade krafter balanserar varandra."},
+{k:"unbalance",topic:"Krafter",q:"Två motsatta krafter är olika stora. Åt vilket håll påverkas rörelsen?",o:["Åt den större kraftens håll","Alltid åt vänster","Åt den mindre kraftens håll","Ingen riktning alls"],a:0,e:"När en kraft är större påverkas föremålet i den större kraftens riktning."},
+{k:"freefall",topic:"Krafter",q:"Vad betyder fritt fall?",o:["Att något faller fritt mot marken","Att något glider utan friktion","Att något står i jämvikt","Att något rör sig i en cirkel"],a:0,e:"Fritt fall är när något eller någon faller fritt ner mot marken."},
+{k:"ball",topic:"Krafter",q:"Du kastar en boll uppåt. Varför vänder den och faller ner?",o:["Tyngdkraften drar den mot jorden","Normalkraften drar den uppåt","Stödytan blir mindre","Tidvattnet drar ner den"],a:0,e:"Bollen bromsas på vägen upp och tyngdkraften drar den tillbaka mot jorden."},
+{k:"friction",topic:"Friktion",q:"Vad är friktion?",o:["Motstånd mellan ytor som rör sig mot varandra","En kraft som bara finns i vatten","Samma sak som hastighet","En enhet för vikt"],a:0,e:"Friktion känns som ett motstånd när två ytor gnids eller rör sig mot varandra."},
+{k:"bigfric",topic:"Friktion",q:"Vad betyder stor friktion i läxan?",o:["Bra grepp och sämre glid","Bra glid och dåligt grepp","Ingen tyngdkraft","Högre hastighet automatiskt"],a:0,e:"Stor friktion ger bra grepp men gör det svårare att glida."},
+{k:"smallfric",topic:"Friktion",q:"Vad betyder liten friktion?",o:["Bra glid och mindre motstånd","Bättre grepp på is","Större tyngdkraft","Större massa"],a:0,e:"Liten friktion ger bra glid."},
+{k:"shoes",topic:"Friktion",q:"Varför är gympaskor bättre än hala strumpor när du ska skjuta en tung möbel?",o:["Skorna ger större friktion och bättre grepp","Skorna minskar tyngdkraften","Skorna gör möbeln lättare","Skorna ökar normalkraften från möbeln"],a:0,e:"Bra grepp mot golvet gör att du kan använda kraft utan att halka."},
+{k:"mat",topic:"Friktion",q:"Varför kan en slät matta under en tung möbel göra den lättare att flytta?",o:["Friktionen mot golvet kan bli mindre","Tyngdkraften försvinner","Möbeln får större massa","Golvet börjar accelerera"],a:0,e:"Mindre friktion ger bättre glid och mindre motstånd."},
+{k:"tread",topic:"Friktion",q:"Varför har skosulor, cykeldäck och vinterdäck mönster eller dubbar?",o:["För bättre grepp genom större friktion","För att minska gravitationen","För att öka farten utan kraft","För att minska stödytan"],a:0,e:"Mönster och dubbar hjälper till att ge bättre grepp."},
+{k:"oil",topic:"Friktion",q:"Varför använder man olja i till exempel gångjärn och cyklar?",o:["För att minska friktionen","För att öka tyngdkraften","För att göra stödytan mindre","För att skapa tidvatten"],a:0,e:"Smörjning minskar friktionen så delarna rör sig lättare."},
+{k:"soap",topic:"Friktion",q:"Varför kan tvål hjälpa om en ring sitter fast på ett finger?",o:["Tvålen minskar friktionen","Tvålen ökar tyngdkraften","Tvålen ökar massan","Tvålen skapar normalkraft"],a:0,e:"Tvål kan minska friktionen så ringen glider lättare."},
+{k:"sled",topic:"Friktion",q:"Varför glider en plastpulka bra på snö?",o:["Det kan vara liten friktion mellan snö och plast","Snön tar bort tyngdkraften","Plasten ökar stödytan oändligt","Pulkan saknar massa"],a:0,e:"Vissa material har liten friktion mot varandra, till exempel snö och plast."},
+{k:"cog",topic:"Balans",q:"Vad är tyngdpunkten?",o:["En tänkt punkt där föremålets massa kan ses som samlad","Ytan under föremålet","Föremålets högsta punkt","Enheten för kraft"],a:0,e:"Tyngdpunkten är en tänkt punkt som är centrum för föremålets tyngd/massa."},
+{k:"support",topic:"Balans",q:"Vad är en stödyta?",o:["Ytan under föremålet där tyngden kan fördelas","En kraft som pekar nedåt","Samma sak som friktion","En hastighetsenhet"],a:0,e:"Stödytan är ytan under föremålet som det stöder sig på."},
+{k:"tip",topic:"Balans",q:"När tippar ett föremål lätt?",o:["När tyngdpunkten hamnar utanför stödytan","När tyngdpunkten är mitt över stödytan","När krafterna är i balans","När friktionen är stor"],a:0,e:"Balansen försvinner när tyngdpunkten hamnar utanför stödytan."},
+{k:"twofeet",topic:"Balans",q:"Varför står du stadigare med två fötter isär än på en fot?",o:["Stödytan blir större","Tyngdkraften försvinner","Friktionen blir alltid noll","Massan minskar"],a:0,e:"En större stödyta gör det lättare att hålla tyngdpunkten ovanför stödytan."},
+{k:"circle",topic:"Cirkel & tidvatten",q:"Vid släggkastning rör sig släggan i en cirkel. Åt vilket håll behövs kraften som håller den i cirkelrörelsen?",o:["In mot cirkelns centrum","Rakt bort från centrum","Bara uppåt","Kraft behövs inte"],a:0,e:"Kraften som håller cirkelrörelsen går in mot centrum, längs armen mot mitten av ringen."},
+{k:"circlefast",topic:"Cirkel & tidvatten",q:"Vad händer med kraftbehovet när släggan roteras snabbare?",o:["Det behövs mer kraft för att hålla den","Det behövs mindre kraft","Kraften blir alltid noll","Tyngdkraften byter riktning"],a:0,e:"Ju snabbare rotation, desto mer kraft behövs för att hålla släggan."},
+{k:"tide",topic:"Cirkel & tidvatten",q:"Vad bidrar till ebb och flod enligt läxan?",o:["Månens rörelse och gravitationskraft","Friktion från skosulor","Normalkraft från marken","Acceleration hos bilar"],a:0,e:"Månens gravitationskraft påverkar vattnet på jorden och bidrar tillsammans med månens rörelse till tidvatten."}
+];
+
+function phShuffle(a){var r=[...a];for(var i=r.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=r[i];r[i]=r[j];r[j]=t;}return r;}
+function phShow(id){document.querySelectorAll("main.card > section").forEach(function(e){e.classList.add("hidden")});var t=document.getElementById(id);if(t)t.classList.remove("hidden");window.scrollTo(0,0);}
+function phGoHub(){renderHub();phShow("hub");}
+function phBtn(text,fn,cls){var b=document.createElement("button");b.className=cls||"option";b.textContent=text;b.onclick=fn;return b;}
+function phEsc(s){return String(s).replace(/[&<>\"]/g,function(c){return({"&":"&amp;","<":"&lt;",">":"&gt;",'\"':"&quot;"})[c]||c;});}
+
+function phInject(){
+ var style=document.createElement("style");
+ style.textContent=".phHero{background:linear-gradient(180deg,#eef7ff,#fff);border:2px solid #dbeeff;border-radius:18px;padding:16px;margin:12px 0;text-align:left;line-height:1.5}.phLab{background:#f7f8fa;border:2px solid #e4e6ea;border-radius:18px;padding:15px;margin:12px 0}.phScene{font-size:58px;line-height:1.15;margin:7px 0}.phGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.phGrid button{font-size:16px}.phNote{background:#eef5ff;border-radius:13px;padding:11px 13px;margin:10px 0;text-align:left;line-height:1.45}.phFinal{background:#fff4e5;border-radius:14px;padding:12px;margin:12px 0;text-align:left;line-height:1.45}.phBig{font-size:24px;font-weight:800;margin:10px 0}.phMeter{height:16px;background:#ddd;border-radius:999px;overflow:hidden;margin:7px 0}.phMeter span{display:block;height:100%;background:#111;border-radius:999px;transition:width .25s}.phMeterLabel{display:flex;justify-content:space-between;font-size:13px;color:#666}.phControl{background:#fff;border:1px solid #ddd;border-radius:14px;padding:12px;margin:10px 0;text-align:left}.phControl input[type=range]{width:100%}.phChoiceOn{outline:3px solid #111;background:#fff!important}.phStage{position:relative;height:140px;background:linear-gradient(#eef6ff 0 72%,#e1ded5 72%);border-radius:16px;overflow:hidden;margin:10px 0}.phFloor{position:absolute;left:0;right:0;bottom:0;height:38px;background:#ddd6c8}.phPerson{position:absolute;left:28px;bottom:37px;font-size:48px;transition:transform .25s}.phCabinet{position:absolute;right:34px;bottom:37px;font-size:54px;transition:transform .3s}.phMat{position:absolute;right:25px;bottom:31px;width:90px;height:10px;background:#a9d5ef;border-radius:10px}.phBalanceStage{position:relative;height:155px;background:#f2f4f8;border-radius:16px;margin:10px 0;overflow:hidden}.phSupport{position:absolute;left:50%;bottom:25px;height:14px;background:#222;border-radius:8px;transform:translateX(-50%);transition:width .25s}.phBody{position:absolute;left:50%;bottom:39px;width:46px;height:76px;background:#e7e7eb;border:3px solid #222;border-radius:12px;transform:translateX(-50%)}.phCog{position:absolute;top:42px;left:50%;width:18px;height:18px;border-radius:50%;background:#111;transform:translateX(-50%);transition:left .15s}.phFallStage{position:relative;height:190px;background:linear-gradient(#eaf6ff,#fff);border-radius:16px;overflow:hidden}.phBall{position:absolute;left:50%;top:15px;font-size:38px;transform:translateX(-50%)}.phBall.drop{animation:phDrop 1s ease-in forwards}@keyframes phDrop{0%{top:15px}100%{top:135px}}.phMoon{font-size:42px;display:inline-block;transform:translateX(0);transition:transform .2s}.phWater{font-size:42px;letter-spacing:-10px;overflow:hidden;white-space:nowrap}.phForcePic{font-size:46px;line-height:1.15;margin:8px 0;font-weight:900}.phSpeed{font-size:30px;font-weight:800}.phTopicTag{display:inline-block;background:#eef0f4;border-radius:999px;padding:5px 9px;font-size:13px;margin:2px}.phReview{border-top:1px solid #ddd;padding-top:8px;margin-top:8px}.phReviewQ{font-weight:800;margin-bottom:4px}";
+ document.head.appendChild(style);
+ var root=document.querySelector("main.card");if(!root||document.getElementById("phStart"))return;
+ root.insertAdjacentHTML("beforeend",
+ '<section id="phStart" class="hidden"><button class="back" onclick="phGoHub()">← Tillbaka</button><div class="badge">🔬 NO • Fysik</div><h1>Fysiklabbet ⚙️</h1><div class="sub">Rörelse • krafter • gravitation • friktion • balans • cirkelrörelse • tidvatten</div><div class="phHero"><strong>Inför provet:</strong> Grundträningen är den raka, vanliga delen. I Fysiklabbet får du prova idéerna visuellt. Avsluta med finalprovet utan ledtrådar.<br><span class="small">Alla områden från Fysik 1–4 finns med.</span></div>'+ 
+ '<button class="game" onclick="phStartTrain(14)">📘 Grundträning – snabbpass<span>14 adaptiva frågor • direkt förklaring • fel kommer tillbaka</span></button>'+ 
+ '<button class="game" onclick="phStartTrain(999)">📚 Grundträning – ALLT<span>Gå igenom hela frågebanken och täck alla begrepp</span></button>'+ 
+ '<button class="game" onclick="phStartLab()">🧪 FYSIKLABBET<span>9 interaktiva stationer • testa, dra, jämför och svara</span></button>'+ 
+ '<button class="game" onclick="phStartFinal()">🏁 FINALPROV<span>20 blandade frågor • inget facit eller rätt/fel förrän efteråt</span></button></section>'+ 
+ '<section id="phQuiz" class="hidden"><button class="exitChallenge" onclick="phExit()">← Avsluta</button><div class="badge" id="phRound"></div><div id="phTopic" class="phTopicTag"></div><div class="prompt" id="phPrompt"></div><div id="phOptions"></div><div class="feedback" id="phFeedback"></div><div class="stats"><span id="phProgress"></span><span id="phHint"></span><span id="phScore"></span></div></section>'+ 
+ '<section id="phLab" class="hidden"><button class="exitChallenge" onclick="phExit()">← Avsluta labbet</button><div class="badge" id="phLabBadge">🧪 Fysiklabbet</div><div id="phLabBody"></div><div class="stats"><span id="phLabProgress"></span><span></span><span id="phLabScore"></span></div></section>'+ 
+ '<section id="phEnd" class="hidden"><h1 id="phEndTitle">Klart! 🌟</h1><div id="phEndBody" style="font-size:19px;line-height:1.55"></div><button class="primary" style="margin-top:18px" onclick="openPhysics()">Till Fysiklabbet ↻</button><br><button class="back" onclick="phGoHub()">← Mina challenges</button></section>');
+}
+window.openPhysics=function(){if(currentProfile!=="amelia")return;phShow("phStart");};
+window.phGoHub=phGoHub;
+window.phExit=function(){if(confirm("Avsluta fysiken? Resultatet sparas först när rundan är klar."))openPhysics();};
+
+let phQueue=[],phI=0,phScore=0,phWrong=[],phMode="train",phFinalAnswers=[];
+window.phStartTrain=function(n){
+ phMode="train";var ranked=adaptiveItems(PH_Q,"physics",function(x){return x.k;});phQueue=(n>=PH_Q.length?ranked:ranked.slice(0,n));phI=0;phScore=0;phWrong=[];phFinalAnswers=[];phShow("phQuiz");phDraw();
+};
+window.phStartFinal=function(){
+ phMode="final";phQueue=phShuffle(PH_Q).slice(0,20);phI=0;phScore=0;phWrong=[];phFinalAnswers=[];phShow("phQuiz");phDraw();
+};
+function phDraw(){
+ if(phI>=phQueue.length){phFinish();return;}
+ var q=phQueue[phI],correct=q.o[q.a],opts=phShuffle(q.o);
+ document.getElementById("phRound").textContent=phMode==="final"?"🏁 Finalprov":"📘 Grundträning";
+ document.getElementById("phTopic").textContent=q.topic;
+ document.getElementById("phPrompt").textContent=q.q;document.getElementById("phFeedback").innerHTML="";
+ document.getElementById("phProgress").textContent=(phI+1)+" / "+phQueue.length;
+ document.getElementById("phHint").textContent=phMode==="final"?"🔒 Facit låst":"Fel kommer igen";
+ document.getElementById("phScore").textContent=phMode==="final"?"":""+phScore+" p";
+ var box=document.getElementById("phOptions");box.innerHTML="";
+ opts.forEach(function(o){box.appendChild(phBtn(o,function(){phAnswer(q,o,correct,this,box);}));});
+}
+function phAnswer(q,answer,correct,b,box){
+ Array.from(box.children).forEach(function(x){x.disabled=true;});var ok=answer===correct;recordSkill("physics",q.k,ok);
+ if(phMode==="final"){
+   phFinalAnswers.push({q:q,answer:answer,correct:correct,ok:ok});if(ok)phScore+=10;else phWrong.push(q);
+   document.getElementById("phFeedback").textContent="Svar sparat.";
+   setTimeout(function(){phI++;phDraw();},300);return;
+ }
+ if(ok){b.classList.add("good");phScore+=10;document.getElementById("phFeedback").innerHTML="✅ Rätt! <span class='context'>"+q.e+"</span>";}
+ else{b.classList.add("bad");phWrong.push(q);Array.from(box.children).forEach(function(x){if(x.textContent===correct)x.classList.add("good");});document.getElementById("phFeedback").innerHTML="🎯 <strong>"+correct+"</strong><span class='context'>"+q.e+"</span>";if(!q._again)phQueue.push(Object.assign({},q,{_again:true}));}
+ document.getElementById("phScore").textContent=phScore+" p";setTimeout(function(){phI++;phDraw();},950);
+}
+function phFinish(){
+ var key=phMode==="final"?"physics_final":"physics_training",rec=recordText(key,phScore),uniq={};phWrong.forEach(function(q){uniq[q.k]=q;});var misses=Object.values(uniq);
+ document.getElementById("phEndTitle").textContent=phMode==="final"?"Finalprovet klart! 🏁":"Grundträningen klar! 🌟";
+ var html="";
+ if(phMode==="final"){
+   var right=phFinalAnswers.filter(function(x){return x.ok;}).length;
+   html+="<strong>"+right+" av "+phFinalAnswers.length+" rätt</strong><br><strong>"+phScore+" poäng</strong>"+rec;
+   if(misses.length){html+='<div class="phFinal"><strong>🎯 Repetera detta:</strong>'+phFinalAnswers.filter(function(x){return !x.ok;}).map(function(x){return '<div class="phReview"><div class="phReviewQ">'+phEsc(x.q.q)+'</div><div class="small">Du svarade: '+phEsc(x.answer)+'<br>Rätt: <strong>'+phEsc(x.correct)+'</strong><br>'+phEsc(x.q.e)+'</div></div>';}).join("")+'</div>';}
+   else html+='<div class="phNote"><strong>🌟 Alla rätt!</strong> Du fick full pott på den här finalrundan.</div>';
+ }else{
+   html+="<strong>"+phScore+" poäng</strong>"+rec;
+   if(misses.length)html+='<div class="phFinal"><strong>Träna en extra gång på:</strong><br>'+misses.slice(0,10).map(function(q){return "• "+phEsc(q.q);}).join("<br>")+'</div>';
+   else html+='<div class="phNote"><strong>🌟 Alla satt!</strong> Nästa steg: prova Fysiklabbet eller finalprovet.</div>';
+ }
+ document.getElementById("phEndBody").innerHTML=html;phShow("phEnd");
+}
+
+let labI=0,labScore=0,labDone=false,labState={};
+const LAB_TITLES=["Friktion: grepp + glid","Tyngdpunkt & stödyta","Kraftpilar & jämvikt","Medelhastighet","Acceleration & retardation","Gravitation & Newton","Fritt fall","Cirkelrörelse","Tidvatten"];
+window.phStartLab=function(){labI=0;labScore=0;labDone=false;labState={};phShow("phLab");phLabDraw();};
+function phLabHead(title,sub){document.getElementById("phLabBadge").textContent="🧪 Lab "+(labI+1)+" • "+title;document.getElementById("phLabProgress").textContent=(labI+1)+" / "+LAB_TITLES.length;document.getElementById("phLabScore").textContent=labScore+" p";return '<div class="phLab"><div class="sub" style="margin-bottom:10px">'+sub+'</div>';}
+function phNextLab(){labI++;labDone=false;labState={};phLabDraw();}
+function phPass(key,ok,explanation){
+ if(labDone)return;labDone=true;recordSkill("physics","lab_"+key,ok);if(ok)labScore+=10;document.getElementById("phLabScore").textContent=labScore+" p";
+ var f=document.getElementById("phLabFeedback");if(f)f.innerHTML=(ok?"✅ Snyggt!":"🧠 Bra test!")+"<span class='context'>"+explanation+"</span><button class='primary' style='margin-top:12px' onclick='phNextLab()'>Nästa labb →</button>";
+}
+window.phNextLab=phNextLab;
+function phLabDraw(){
+ if(labI>=LAB_TITLES.length){var rec=recordText("physics_lab",labScore);document.getElementById("phEndTitle").textContent="Fysiklabbet klart! 🧪";document.getElementById("phEndBody").innerHTML="<strong>"+labScore+" av "+(LAB_TITLES.length*10)+" poäng</strong>"+rec+'<div class="phNote">Du har jobbat praktiskt med friktion, balans, kraftpilar, fart, acceleration, gravitation, fritt fall, cirkelrörelse och tidvatten.</div>';phShow("phEnd");return;}
+ var body=document.getElementById("phLabBody");
+ if(labI===0)renderFriction(body);else if(labI===1)renderBalance(body);else if(labI===2)renderForces(body);else if(labI===3)renderSpeed(body);else if(labI===4)renderAccel(body);else if(labI===5)renderGravity(body);else if(labI===6)renderFall(body);else if(labI===7)renderCircle(body);else renderTide(body);
+}
+
+function renderFriction(body){
+ labState={shoe:"sock",mat:false};body.innerHTML=phLabHead("Friktion: grepp + glid","Målet är att flytta byrån lätt utan att själv halka.")+
+ '<div class="phStage"><div class="phFloor"></div><div id="phMatPic" class="phMat hidden"></div><div class="phPerson">🧍</div><div class="phCabinet">🗄️</div></div>'+ 
+ '<div class="phGrid"><button id="phSock" class="phChoiceOn" onclick="phSetShoe(\'sock\')">🧦 Strumpor</button><button id="phShoe" onclick="phSetShoe(\'shoe\')">👟 Gympaskor</button><button id="phNoMat" class="phChoiceOn" onclick="phSetMat(false)">Golvet direkt</button><button id="phYesMat" onclick="phSetMat(true)">🟦 Slät matta under</button></div>'+ 
+ '<div class="phControl"><div class="phMeterLabel"><span>Grepp för dig</span><span id="phGripTxt"></span></div><div class="phMeter"><span id="phGrip"></span></div><div class="phMeterLabel"><span>Glid för byrån</span><span id="phGlideTxt"></span></div><div class="phMeter"><span id="phGlide"></span></div></div>'+ 
+ '<button class="primary" onclick="phTestFriction()">Testa kombinationen</button><div class="feedback" id="phLabFeedback"></div></div>';updateFriction();
+}
+window.phSetShoe=function(v){if(labDone)return;labState.shoe=v;document.getElementById("phSock").classList.toggle("phChoiceOn",v==="sock");document.getElementById("phShoe").classList.toggle("phChoiceOn",v==="shoe");updateFriction();};
+window.phSetMat=function(v){if(labDone)return;labState.mat=v;document.getElementById("phNoMat").classList.toggle("phChoiceOn",!v);document.getElementById("phYesMat").classList.toggle("phChoiceOn",v);document.getElementById("phMatPic").classList.toggle("hidden",!v);updateFriction();};
+function updateFriction(){var g=labState.shoe==="shoe"?88:28,gl=labState.mat?88:34;var a=document.getElementById("phGrip"),b=document.getElementById("phGlide");if(a)a.style.width=g+"%";if(b)b.style.width=gl+"%";if(document.getElementById("phGripTxt"))document.getElementById("phGripTxt").textContent=g>50?"bra":"halt";if(document.getElementById("phGlideTxt"))document.getElementById("phGlideTxt").textContent=gl>50?"lätt":"trögt";}
+window.phTestFriction=function(){var ok=labState.shoe==="shoe"&&labState.mat;phPass("friction_combo",ok,"Gympaskor ger stor friktion och bra grepp för fötterna. En slät matta kan ge mindre friktion under möbeln och bättre glid. Samma situation kan alltså behöva både stor och liten friktion på olika ställen.");};
+
+function renderBalance(body){
+ labState={x:50,width:52};body.innerHTML=phLabHead("Tyngdpunkt & stödyta","Flytta tyngdpunkten. Prova sedan en bred och en smal stödyta.")+
+ '<div class="phBalanceStage"><div class="phBody"></div><div id="phCog" class="phCog"></div><div id="phSupport" class="phSupport"></div></div>'+ 
+ '<div class="phControl"><strong>Flytta tyngdpunkten:</strong><input id="phCogSlider" type="range" min="5" max="95" value="50" oninput="phBalanceMove(this.value)"><div id="phBalanceStatus" class="phNote"></div></div>'+ 
+ '<div class="phGrid"><button id="phWide" class="phChoiceOn" onclick="phSupportWidth(52)">🦶 🦶 Bred stödyta</button><button id="phNarrow" onclick="phSupportWidth(20)">🦶 Smal stödyta</button></div>'+ 
+ '<div class="phBig">När tippar föremålet?</div><div class="phGrid" id="phBalanceChoices"></div><div class="feedback" id="phLabFeedback"></div></div>';
+ document.getElementById("phBalanceChoices").appendChild(phBtn("När tyngdpunkten hamnar utanför stödytan",function(){phPass("balance",true,"Du håller balansen när tyngdpunkten är ovanför stödytan. När den hamnar utanför stödytan tippar föremålet.");}));
+ document.getElementById("phBalanceChoices").appendChild(phBtn("Så fort tyngdpunkten flyttas från mitten",function(){phPass("balance",false,"Tyngdpunkten får flyttas inom stödytan. Det är först när den hamnar utanför stödytan som föremålet tippar.");}));updateBalance();
+}
+window.phBalanceMove=function(v){if(labDone)return;labState.x=Number(v);updateBalance();};
+window.phSupportWidth=function(w){if(labDone)return;labState.width=w;document.getElementById("phWide").classList.toggle("phChoiceOn",w===52);document.getElementById("phNarrow").classList.toggle("phChoiceOn",w===20);updateBalance();};
+function updateBalance(){var cog=document.getElementById("phCog"),sup=document.getElementById("phSupport"),st=document.getElementById("phBalanceStatus");if(!cog)return;cog.style.left=labState.x+"%";sup.style.width=labState.width+"%";var lo=50-labState.width/2,hi=50+labState.width/2,inside=labState.x>=lo&&labState.x<=hi;st.innerHTML=inside?"✅ Tyngdpunkten är ovanför stödytan – balans.":"💥 Tyngdpunkten är utanför stödytan – föremålet tippar.";}
+
+function renderForces(body){body.innerHTML=phLabHead("Kraftpilar & jämvikt","En bok ligger still på bordet. Välj den kraftbild som passar.")+
+ '<div class="phScene">📕</div><div class="phGrid" id="phForceChoices"></div><div class="feedback" id="phLabFeedback"></div></div>';
+ var box=document.getElementById("phForceChoices");box.appendChild(phBtn("⬆️ lika lång\n⬇️ lika lång",function(){phPass("forces",true,"Tyngdkraften verkar nedåt och bordets normalkraft uppåt. När boken ligger still är de lika stora. Kraftpilens längd visar styrkan och pilen visar riktningen.");}));box.appendChild(phBtn("⬆️ kort\n⬇️ lång",function(){phPass("forces",false,"Om nedåtkraften vore större än uppåtkraften skulle krafterna inte vara i jämvikt. En stillaliggande bok har balanserade krafter.");}));}
+
+function renderSpeed(body){labState={dist:60,time:2};body.innerHTML=phLabHead("Medelhastighet","Ändra sträcka och tid och räkna sedan ut medelhastigheten.")+
+ '<div class="phScene">🚲💨</div><div class="phControl"><strong>Sträcka: <span id="phDistTxt">60</span> km</strong><input type="range" min="20" max="100" step="10" value="60" oninput="phSetSpeedLab(\'dist\',this.value)"><strong>Tid: <span id="phTimeTxt">2</span> h</strong><input type="range" min="1" max="5" step="1" value="2" oninput="phSetSpeedLab(\'time\',this.value)"></div>'+ 
+ '<div class="phBig">Medelhastighet = ?</div><button class="primary" onclick="phCalcSpeed()">Räkna ut</button><div id="phSpeedAnswer" class="phNote">Formel: sträcka ÷ tid</div><div class="phGrid" id="phSpeedChoices"></div><div class="feedback" id="phLabFeedback"></div></div>';renderSpeedChoices();}
+window.phSetSpeedLab=function(k,v){if(labDone)return;labState[k]=Number(v);document.getElementById(k==="dist"?"phDistTxt":"phTimeTxt").textContent=v;document.getElementById("phSpeedAnswer").textContent="Formel: sträcka ÷ tid";renderSpeedChoices();};
+window.phCalcSpeed=function(){var ans=labState.dist/labState.time;document.getElementById("phSpeedAnswer").innerHTML="<strong>"+labState.dist+" ÷ "+labState.time+" = "+ans.toFixed(ans%1?1:0)+" km/h</strong>";};
+function renderSpeedChoices(){var box=document.getElementById("phSpeedChoices");if(!box)return;box.innerHTML="";var ans=labState.dist/labState.time,wrong1=labState.dist*labState.time,wrong2=labState.time/labState.dist;[ans,wrong1,Math.max(1,ans+10),Math.max(1,ans-10)].filter(function(v,i,a){return a.indexOf(v)===i;}).slice(0,2).forEach(function(v){box.appendChild(phBtn((v%1?v.toFixed(1):v)+" km/h",function(){phPass("speed",Math.abs(v-ans)<.001,"Medelhastighet räknas som sträcka delat med tid.");}));});}
+
+function renderAccel(body){labState={speed:30,last:30};body.innerHTML=phLabHead("Acceleration & retardation","Gasa och bromsa. Se vad som händer med hastigheten.")+
+ '<div class="phScene">🚗</div><div class="phSpeed" id="phCarSpeed">30 km/h</div><div class="phMeter"><span id="phCarMeter" style="width:30%"></span></div>'+ 
+ '<div class="phGrid"><button onclick="phCarChange(10)">➕ Gasa</button><button onclick="phCarChange(-10)">➖ Bromsa</button></div><div id="phCarStatus" class="phNote">Prova att ändra farten.</div>'+ 
+ '<div class="phBig">När hastigheten minskar kallas det…</div><div class="phGrid" id="phAccelChoices"></div><div class="feedback" id="phLabFeedback"></div></div>';
+ var b=document.getElementById("phAccelChoices");b.appendChild(phBtn("Retardera",function(){phPass("accel",true,"Acceleration betyder ökande hastighet. Retardation betyder minskande hastighet.");}));b.appendChild(phBtn("Accelerera",function(){phPass("accel",false,"Accelerera är att öka hastigheten. När hastigheten minskar heter det retardera.");}));}
+window.phCarChange=function(d){if(labDone)return;labState.last=labState.speed;labState.speed=Math.max(0,Math.min(100,labState.speed+d));document.getElementById("phCarSpeed").textContent=labState.speed+" km/h";document.getElementById("phCarMeter").style.width=labState.speed+"%";document.getElementById("phCarStatus").textContent=d>0?"🚀 Hastigheten ökar: bilen accelererar.":"🛑 Hastigheten minskar: bilen retarderar.";};
+
+function renderGravity(body){labState={mass:48};body.innerHTML=phLabHead("Gravitation & Newton","Ändra massan. I läxan räknar vi ungefär 10 N per kg.")+
+ '<div class="phScene">🌍⬇️</div><div class="phControl"><strong>Massa: <span id="phMassTxt">48</span> kg</strong><input type="range" min="10" max="60" step="1" value="48" oninput="phMassChange(this.value)"></div>'+ 
+ '<div class="phBig" id="phNewtonTxt">≈ 480 N</div><div class="phNote">Tyngdkraften drar föremål mot jordens centrum. Kraft mäts i Newton (N).</div>'+ 
+ '<div class="phBig">48 kg motsvarar ungefär…</div><div class="phGrid" id="phGravityChoices"></div><div class="feedback" id="phLabFeedback"></div></div>';
+ var b=document.getElementById("phGravityChoices");b.appendChild(phBtn("480 N",function(){phPass("gravity",true,"Med läxans ungefärliga omräkning blir 48 kg cirka 480 N gravitationskraft.");}));b.appendChild(phBtn("48 N",function(){phPass("gravity",false,"Kraften blir ungefär tio gånger massan i kg i läxans exempel: 48 kg ≈ 480 N.");}));}
+window.phMassChange=function(v){if(labDone)return;labState.mass=Number(v);document.getElementById("phMassTxt").textContent=v;document.getElementById("phNewtonTxt").textContent="≈ "+(Number(v)*10)+" N";};
+
+function renderFall(body){body.innerHTML=phLabHead("Fritt fall","Tryck på knappen och släpp bollen.")+
+ '<div class="phFallStage"><div id="phBall" class="phBall">🏀</div></div><button class="primary" onclick="phDropBall()">Släpp bollen ↓</button><div id="phFallNote" class="phNote">Vad får bollen att falla?</div>'+ 
+ '<div class="phGrid" id="phFallChoices"></div><div class="feedback" id="phLabFeedback"></div></div>';
+ var b=document.getElementById("phFallChoices");b.appendChild(phBtn("Tyngdkraften",function(){phPass("freefall",true,"Fritt fall är när något faller fritt mot marken. Tyngdkraften drar det mot jorden.");}));b.appendChild(phBtn("Normalkraften",function(){phPass("freefall",false,"Normalkraft finns när något stöds av en yta. En fritt fallande boll dras mot jorden av tyngdkraften.");}));}
+window.phDropBall=function(){if(labDone)return;var b=document.getElementById("phBall");b.classList.remove("drop");void b.offsetWidth;b.classList.add("drop");document.getElementById("phFallNote").textContent="Bollen faller fritt nedåt mot marken.";};
+
+function renderCircle(body){labState={rot:30};body.innerHTML=phLabHead("Cirkelrörelse","Öka rotationsfarten och se hur kraftbehovet förändras.")+
+ '<div class="phScene">🧍‍♀️〰️🔨</div><div class="phControl"><strong>Rotationsfart</strong><input type="range" min="10" max="100" value="30" oninput="phCircleSpeed(this.value)"><div class="phMeterLabel"><span>Kraftbehov</span><span id="phCircleTxt">30%</span></div><div class="phMeter"><span id="phCircleMeter" style="width:30%"></span></div></div>'+ 
+ '<div class="phBig">Åt vilket håll verkar kraften som håller släggan i cirkelrörelsen?</div><div class="phGrid" id="phCircleChoices"></div><div class="feedback" id="phLabFeedback"></div></div>';
+ var b=document.getElementById("phCircleChoices");b.appendChild(phBtn("In mot cirkelns centrum",function(){phPass("circle",true,"Kraften går in mot centrum. När rotationsfarten ökar behövs mer kraft för att hålla släggan i cirkelrörelsen.");}));b.appendChild(phBtn("Rakt bort från centrum",function(){phPass("circle",false,"Kraften som håller cirkelrörelsen är riktad in mot centrum, längs armen mot mitten av ringen.");}));}
+window.phCircleSpeed=function(v){if(labDone)return;labState.rot=Number(v);document.getElementById("phCircleMeter").style.width=v+"%";document.getElementById("phCircleTxt").textContent=v+"%";};
+
+function renderTide(body){labState={moon:0};body.innerHTML=phLabHead("Tidvatten","Flytta månen och fundera på vad som påverkar jordens vatten.")+
+ '<div class="phControl" style="text-align:center"><div id="phMoon" class="phMoon">🌙</div><div class="phWater">🌊🌊🌊🌊🌊</div><input type="range" min="-100" max="100" value="0" oninput="phMoonMove(this.value)"></div>'+ 
+ '<div class="phNote">Månens gravitationskraft påverkar vattnet på jorden. Tillsammans med månens rörelse ger det ebb och flod.</div>'+ 
+ '<div class="phBig">Vilken kraft är viktig här?</div><div class="phGrid" id="phTideChoices"></div><div class="feedback" id="phLabFeedback"></div></div>';
+ var b=document.getElementById("phTideChoices");b.appendChild(phBtn("Månens gravitationskraft",function(){phPass("tide",true,"Månens gravitationskraft påverkar jordens vatten och bidrar till tidvattnet.");}));b.appendChild(phBtn("Friktion från jordytan",function(){phPass("tide",false,"Tidvattenfrågan i läxan kopplas till månens rörelse och gravitationskraft.");}));}
+window.phMoonMove=function(v){if(labDone)return;document.getElementById("phMoon").style.transform="translateX("+(Number(v)*1.2)+"px)";};
+
+// Visa fysikresultat i Amelias framsteg och ge snygga namn i historiken.
+var phOldChallengeLabel=window.challengeLabel;
+window.challengeLabel=function(key){var m={physics_training:"🔬 Fysik • Grundträning",physics_lab:"🧪 Fysiklabbet",physics_final:"🏁 Fysik • Finalprov"};return m[key]||phOldChallengeLabel(key);};
+var phOldRenderProgress=window.renderProgress;
+window.renderProgress=function(){
+ phOldRenderProgress();if(currentProfile!=="amelia")return;var box=document.getElementById("progressCards");if(!box)return;
+ var p=profileData(loadHC()),trained=PH_Q.filter(function(q){return mastery("physics",q.k).rank>0;}).length,sitting=PH_Q.filter(function(q){return mastery("physics",q.k).rank===3;}).length,finalBest=Number(p.records.physics_final)||0,labBest=Number(p.records.physics_lab)||0;
+ var weak=adaptiveItems(PH_Q,"physics",function(q){return q.k;}).filter(function(q){var m=mastery("physics",q.k);return m.rank>0&&m.rank<3;}).slice(0,4);
+ box.insertAdjacentHTML("beforeend",'<div class="progressCard"><div class="progressTop"><span>🔬 NO • Fysik</span><span class="record">'+(finalBest?'🏁 '+finalBest+' p':'Inget finalprov än')+'</span></div><div class="bar"><span style="width:'+Math.round(sitting/PH_Q.length*100)+'%"></span></div><div class="progressNote"><strong>'+sitting+'/'+PH_Q.length+' kärnfrågor sitter</strong> • '+trained+' har tränats • Fysiklabbet bästa: '+labBest+' p.'+(weak.length?'<br>🎯 Fokus just nu: '+weak.map(function(q){return q.topic;}).filter(function(v,i,a){return a.indexOf(v)===i;}).join(' • ')+'.':'')+'</div></div>');
+};
+
+phInject();
 })();
 </script>
 </body></html>
